@@ -11,6 +11,7 @@ class Faculty{
     Faculty();
     //overload
     Faculty(int student);
+
 };
 
 

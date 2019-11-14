@@ -14,6 +14,15 @@ class Student{
     Student();
     //overload
     Student(int advisor);
+    //getters
+    string getMajor();
+    double getGPA();
+    int getAdvisor();
+    //setters
+    void setMajor(string major);
+    void setGPA(double gpa);
+    void setAdvisor(int advisor);
+    //methods
 };
 
 Student::Student()
