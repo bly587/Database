@@ -13,7 +13,7 @@ class Student{
     //constructor
     Student();
     //overload
-    Student(int advisor);
+    Student(string major, double gpa, int advisor);
     //getters
     string getMajor();
     double getGPA();
@@ -24,15 +24,46 @@ class Student{
     void setAdvisor(int advisor);
     //methods
 };
-
+//constructors
 Student::Student()
 {
-  waitTime = 0;
-  timeNeeded = 0;
+  m_major = NULL;
+  m_gpa = 0.00;
+  m_advisor = NULL;
 }
 
-Student::Student(int tn)
+Student::Student(string major, double gpa, int advisor)
 {
-  waitTime = 0;
-  timeNeeded = tn;
+  m_major = major;
+  m_gpa = gpa;
+  m_advisor = advisor;
 }
+//getters
+string Student::getMajor()
+{
+  return m_major;
+}
+
+double Student::getGPA()
+{
+  return m_gpa;
+}
+
+int Student::getAdvisor()
+{
+  return m_advisor;
+}
+//setters
+void Student::setMajor(string major)
+{
+  m_major = major;
+}
+void Student::setGPA(double gpa)
+{
+  m_gpa = gpa;
+}
+void Student::setAdvisor(int advisor)
+{
+  m_advisor = advisor;
+}
+//methods
