@@ -1,6 +1,7 @@
 #include <iostream>
 #include "BST.h"
 #include "Person.h"
+#include "Faculty.h"
 
 using namespace std;
 
@@ -56,6 +57,12 @@ int main(int argc, char** argv){
   Person* p4 = new Person("Name4", "Level4", 1004);
   Person* p5 = new Person("Name5", "Level5", 995);
   Person* p6 = new Person("Name6", "Level6", 996);
+
+  //Student* s1 = new Student("Data Science", 3.03, 1001);
+  cout << "Attempting to creat faculty" << endl;
+  Faculty* f1 = new Faculty("Rene", "Computer Science", 2001);
+  cout << "Attempting to print out faculty" << endl;
+  f1->printFaculty();
   theTree->insert(p1);
   //theTree->printTree();
   theTree->insert(p2);
@@ -63,6 +70,8 @@ int main(int argc, char** argv){
   theTree->insert(p4);
   theTree->insert(p5);
   theTree->insert(p6);
+  cout << "Max Number getting printed" << endl;
+  cout << p1->getId() << endl;
   theTree->printTree();
 
   return 0;

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-class Student{
+class Student : public Person{
   public:
 
     string m_major;
@@ -23,13 +23,14 @@ class Student{
     void setGPA(double gpa);
     void setAdvisor(int advisor);
     //methods
+    //print all students by ascending number
 };
 //constructors
 Student::Student()
 {
-  m_major = NULL;
+  m_major = "";
   m_gpa = 0.00;
-  m_advisor = NULL;
+  m_advisor = 0;
 }
 
 Student::Student(string major, double gpa, int advisor)

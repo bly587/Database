@@ -1,29 +1,42 @@
 #include <iostream>
+#include "Student.h"
+#include "SLinkedList.h"
 
 using namespace std;
 
-class Faculty{
+class Faculty : public Person{
   public:
     string m_department;
-    LinkedList* m_advisees;
+    SLinkedList<int> *m_advisees;
 
     //constructor
-    Faculty();
+    Faculty(string name, string level, int id);
     //overload
-    Faculty(int student);
+    Faculty(string department, int student);
     //getters
     string getDepartment();
     //setters
     void setDepartment();
+    //methods
+    void printFaculty();
+
 };
 
-Faculty::Faculty()
+Faculty::Faculty(string name, string level, int id) : Person(name, level, id)
 {
-  m_department = NULL;
-  m_advisees = NULL;
+  m_department = "";
+  m_advisees = new SLinkedList<int>;
 }
 
-Faculty::Faculty(int student)
+Faculty::Faculty(string department, int student)
 {
-  m_advisees.push(student);
+  m_department = department;
+  m_advisees = new SLinkedList<int>;
+  m_advisees->insertFront(student);
+}
+
+void Faculty::printFaculty()
+{
+  cout << "Faculty: " << endl;
+  cout << "Name: " << getName() << endl;
 }
