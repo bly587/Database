@@ -55,7 +55,8 @@ void SLinkedList<T>::printList(){
   SListNode<T> *current = front;
   while (current != NULL)
   {
-    cout << current->data << endl;
+    cout << current->data;
+    cout << ", ";
     current = current->next;
   }
 }

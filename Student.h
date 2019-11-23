@@ -11,9 +11,9 @@ class Student : public Person{
 
 
     //constructor
-    Student();
+    Student(string name, string level, int id);
     //overload
-    Student(string major, double gpa, int advisor);
+    Student(string name, string level, int id, string major, double gpa, int advisor);
     //getters
     string getMajor();
     double getGPA();
@@ -24,16 +24,17 @@ class Student : public Person{
     void setAdvisor(int advisor);
     //methods
     //print all students by ascending number
+    void printStudent();
 };
 //constructors
-Student::Student()
+Student::Student(string name, string level, int id) : Person(name, level, id)
 {
   m_major = "";
   m_gpa = 0.00;
   m_advisor = 0;
 }
 
-Student::Student(string major, double gpa, int advisor)
+Student::Student(string name, string level, int id, string major, double gpa, int advisor) : Person(name, level, id)
 {
   m_major = major;
   m_gpa = gpa;
@@ -68,3 +69,11 @@ void Student::setAdvisor(int advisor)
   m_advisor = advisor;
 }
 //methods
+void Student::printStudent()
+{
+  cout << "Student: " << endl;
+  cout << "Name: " << getName() << endl;
+  cout << "Major: " << getMajor() << endl;
+  cout << "GPA: " << getGPA() << endl;
+  cout << "Advisor: " << getAdvisor() << endl;
+}

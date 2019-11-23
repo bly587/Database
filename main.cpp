@@ -1,6 +1,6 @@
 #include <iostream>
 #include "BST.h"
-#include "Person.h"
+//#include "Person.h"
 #include "Faculty.h"
 
 using namespace std;
@@ -58,11 +58,21 @@ int main(int argc, char** argv){
   Person* p5 = new Person("Name5", "Level5", 995);
   Person* p6 = new Person("Name6", "Level6", 996);
 
+  cout << "Attempting to create a student" << endl;
+  Student* s1 = new Student("Jt", "Beast" , 2317445, "Data Analytics", 4.00, 2001);
+  cout << "Attempting to print student" << endl;
+  s1->printStudent();
   //Student* s1 = new Student("Data Science", 3.03, 1001);
-  cout << "Attempting to creat faculty" << endl;
-  Faculty* f1 = new Faculty("Rene", "Computer Science", 2001);
+  cout << "Attempting to create faculty" << endl;
+  Faculty* f1 = new Faculty("Rene", "Professor", 2001);
+  Faculty* f2 = new Faculty("Linstead", "Professor", 2002, "Computer Science", 2001);
+  f2->addAdvisee(101);
+  f2->addAdvisee(102);
+  f2->addAdvisee(103);
   cout << "Attempting to print out faculty" << endl;
   f1->printFaculty();
+  f2->printFaculty();
+
   theTree->insert(p1);
   //theTree->printTree();
   theTree->insert(p2);
@@ -72,7 +82,8 @@ int main(int argc, char** argv){
   theTree->insert(p6);
   cout << "Max Number getting printed" << endl;
   cout << p1->getId() << endl;
-  theTree->printTree();
+  cout << "Attempting to find person in tree" << endl;
+  cout << theTree->search(p1) << endl;
 
   return 0;
 }

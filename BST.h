@@ -1,5 +1,6 @@
 #include <iostream>
 #include "TreeNode.h"
+#include "Person.h"
 
 using namespace std;
 
@@ -153,8 +154,8 @@ bool BST<T>::search(T elem){
 
   // made it here? the tree is for shizzle not empty
   TreeNode<T> *current = root;
-  while (current != elem){
-    if (elem < current){
+  while ((T)current != (T)elem){
+    if ((T)elem < (T)current){
       current = current->left;
     }
     else{
