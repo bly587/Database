@@ -12,7 +12,7 @@ class BST{
     ~BST();
 
     bool search(T elem);
-    void insert(T &elem);
+    void insert(T elem);
     bool deleteNode(T elem);
 
     // helper functions
@@ -51,7 +51,7 @@ void BST<T>::recPrint(TreeNode<T> *node){
   }
 
   recPrint(node->left);
-  cout << node->obj << endl;
+  cout << **node->obj << endl;
   recPrint(node->right);
 }
 
@@ -91,31 +91,36 @@ TreeNode<T>* BST<T>::getMin(){
 }
 
 template <class T>
-void BST<T>::insert(T &elem){
-  cout << "inserting " << elem << endl;
+void BST<T>::insert(T elem){
+  cout << "inserting " << *elem << endl;
   // check if value exists in tree already before proceding
   // every key is unique, so if it is already in the tree, we cannot insert
 
-  TreeNode<T> *node = new TreeNode<T>(&elem);
+  TreeNode<T> *node = new TreeNode<T>(elem);
+  cout << "new node= " << **node->obj << endl;
+  cout << "new node= " << **node->obj << endl; // Bro this changes after the first cout like how the heck
   // int value = node->key; do i need this
 
   if (root == NULL){ // empty tree
     root = node;
+    cout << "first node entered as root" << endl;
+    cout << "root= "<< **node->obj << endl; //not printing correct value
   }
   else{
     // tree is not empty
     // let's find the insertion point
     TreeNode<T> *current = root;
     TreeNode<T> *parent = NULL;
+    cout << "current/root= "<< **root->obj << endl; //not printing correct value
 
     int deez = 0;
     int nuts = 0;
     // traverse tree
     while(deez == nuts){
       parent = current;
-
+      cout << "about to compare..." << endl;
       // Compare objects --> for assignment_5, we make comparison operators in the object class itself
-      if (&elem < current->obj){
+      if (*elem < **current->obj){
         // go left
         current = current->left;
         cout << "goin left" << endl;

@@ -6,7 +6,7 @@ template <class T>
 class TreeNode{
   public:
     TreeNode();
-    TreeNode(T* object); //k = key, which in this example is also the value(data)
+    TreeNode(T object); //k = key, which in this example is also the value(data)
     ~TreeNode(); // when creating a template class, destructor must be virtual
 
     //int key;
@@ -22,8 +22,8 @@ TreeNode<T>::TreeNode(){
 }
 
 template <class T>
-TreeNode<T>::TreeNode(T* object){
-  obj = object;
+TreeNode<T>::TreeNode(T object){
+  obj = &object;
   left = NULL;
   right = NULL;
 }

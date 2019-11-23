@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <fstream>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class Person{
     //methods
     friend bool operator < (Person &obj1, Person &obj2);
     friend bool operator > (Person &obj1, Person &obj2);
+    friend ostream& operator << (ostream& o, Person& p);
 
   private:
     string m_name;
@@ -106,3 +108,7 @@ bool operator > (Person &obj1, Person &obj2){
 }
 
 // Overload Print
+ostream& operator << (ostream& o, Person& p){
+  o << "id=" << p.m_id << endl;
+  return o;
+}

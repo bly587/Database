@@ -33,6 +33,7 @@ int main(int argc, char** argv){
   // things
 
   // test with int
+  /*
   BST<int>* intTree = new BST<int>();
   int a = 134;
   int b = 136;
@@ -46,7 +47,7 @@ int main(int argc, char** argv){
   intTree->insert(e);
   intTree->printTree();
   delete intTree;
-
+  */
 
   BST<Person*>* theTree = new BST<Person*>();
   Person* p1 = new Person("Name1", "Level1", 1001);
@@ -56,6 +57,7 @@ int main(int argc, char** argv){
   Person* p5 = new Person("Name5", "Level5", 995);
   Person* p6 = new Person("Name6", "Level6", 996);
   theTree->insert(p1);
+  //theTree->printTree();
   theTree->insert(p2);
   theTree->insert(p3);
   theTree->insert(p4);
