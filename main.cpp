@@ -1,4 +1,6 @@
 #include <iostream>
+#include "BST.h"
+#include "Person.h"
 
 using namespace std;
 
@@ -29,6 +31,37 @@ int main(int argc, char** argv){
   // do
   // the
   // things
+
+  // test with int
+  BST<int>* intTree = new BST<int>();
+  int a = 134;
+  int b = 136;
+  int c = 174;
+  int d = 188;
+  int e = 199;
+  intTree->insert(a);
+  intTree->insert(b);
+  intTree->insert(c);
+  intTree->insert(d);
+  intTree->insert(e);
+  intTree->printTree();
+  delete intTree;
+
+
+  BST<Person*>* theTree = new BST<Person*>();
+  Person* p1 = new Person("Name1", "Level1", 1001);
+  Person* p2 = new Person("Name2", "Level2", 1002);
+  Person* p3 = new Person("Name3", "Level3", 1003);
+  Person* p4 = new Person("Name4", "Level4", 1004);
+  Person* p5 = new Person("Name5", "Level5", 995);
+  Person* p6 = new Person("Name6", "Level6", 996);
+  theTree->insert(p1);
+  theTree->insert(p2);
+  theTree->insert(p3);
+  theTree->insert(p4);
+  theTree->insert(p5);
+  theTree->insert(p6);
+  theTree->printTree();
 
   return 0;
 }

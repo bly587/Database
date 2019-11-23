@@ -1,4 +1,4 @@
-#inlcude <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -9,7 +9,7 @@ class Person{
     Person();
     //overloaded
     Person(string name, string level, int id);
-    //destrutor
+    //destructor
     ~Person();
 
     //getters
@@ -21,6 +21,8 @@ class Person{
     void setLevel(string level);
     void setId(int id);
     //methods
+    friend bool operator < (Person &obj1, Person &obj2);
+    friend bool operator > (Person &obj1, Person &obj2);
 
   private:
     string m_name;
@@ -32,10 +34,11 @@ class Person{
 Person::Person()
 {
   //constructor
-  m_name = NULL;
-  m_level = NULL;
-  m_id = NULL;
+  m_name = "";
+  m_level = "";
+  //m_id = NULL;
 }
+
 Person::Person(string name, string level, int id)
 {
   //overloaded
@@ -43,33 +46,63 @@ Person::Person(string name, string level, int id)
   m_level = level;
   m_id = id;
 }
+
 Person::~Person()
 {
 
 }
+
 //getters
 string Person::getName()
 {
   return m_name;
 }
+
 string Person::getLevel()
 {
   return m_level;
 }
+
 int Person::getId()
 {
   return m_id;
 }
+
 //setters
 void Person::setName(string name)
 {
   m_name = name;
 }
-void setLevel(string level)
+
+void Person::setLevel(string level)
 {
   m_level = level;
 }
-void setId(int id)
+
+void Person::setId(int id)
 {
   m_id = id;
 }
+
+// Overload operators
+bool operator < (Person &obj1, Person &obj2){
+  cout << "comparing " << obj1.m_id << " with " << obj2.m_id << endl;
+  if (obj1.m_id < obj2.m_id){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+bool operator > (Person &obj1, Person &obj2){
+  cout << "comparing " << obj1.m_id << " with " << obj2.m_id << endl;
+  if (obj1.m_id > obj2.m_id){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+// Overload Print
