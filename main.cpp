@@ -82,8 +82,9 @@ int main(int argc, char** argv){
   theTree->insert(p6);
   cout << "Max Number getting printed" << endl;
   cout << p1->getId() << endl;
-  cout << "Attempting to find person in tree" << endl;
-  cout << theTree->search(p1) << endl;
+  cout << "Attempting to find Name3 person in tree" << endl;
+  Person* temp = theTree->find(1003);
+  cout << temp->getName() << endl;
 
   return 0;
 }

@@ -12,6 +12,7 @@ class BST{
     BST();
     ~BST();
 
+    T find(int num);
     bool search(T elem);
     void insert(T elem);
     bool deleteNode(T elem);
@@ -143,6 +144,33 @@ void BST<T>::insert(T elem){
   }
 }
 
+template <class T>
+T BST<T>::find(int num)
+{
+  if(root == NULL)
+  {
+    cout << "BST Empty" << endl;
+    return NULL;
+  }
+  TreeNode<T> *current = root;
+  Person* temp = (T)current->obj;
+  while (temp->getId() != num){
+    if (num < temp->getId()){
+      current = current->left;
+    }
+    else{
+      current = current->right;
+    }
+
+    if (current == NULL){ //  value not in tree
+      return NULL;
+    }
+    else
+    {
+      return (T)current->obj;
+    }
+  }
+}
 // this function may change to return a TreeNode<T>* for assignment_5
 template <class T>
 bool BST<T>::search(T elem){
