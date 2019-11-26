@@ -25,6 +25,8 @@ class Student : public Person{
     //methods
     //print all students by ascending number
     void printStudent();
+    // serialize
+    ostream& serialize(ostream& o);
 };
 //constructors
 Student::Student(string name, string level, int id) : Person(name, level, id)
@@ -76,4 +78,18 @@ void Student::printStudent()
   cout << "Major: " << getMajor() << endl;
   cout << "GPA: " << getGPA() << endl;
   cout << "Advisor: " << getAdvisor() << endl;
+}
+
+// serializes student data to file via ostream& o
+ostream& Student::serialize(ostream& o){
+  o << getName() << endl;
+  o << getLevel() << endl;
+  o << getId() << endl;
+  o << m_major << endl;
+  o << m_gpa << endl;
+  o << m_advisor << endl;
+
+  o << endl;
+
+  return o;
 }

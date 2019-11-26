@@ -28,6 +28,8 @@ class Person{
     friend istream& operator >> (istream& i, Person& p);
     void printPerson();
 
+    //virtual string serialize();
+
   private:
     string m_name;
     string m_level;

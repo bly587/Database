@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "BST.h"
+#include "SpecialBST.h"
 //#include "Person.h"
 #include "Faculty.h"
 
@@ -60,13 +61,13 @@ int main(int argc, char** argv){
   Person* p6 = new Person("Name6", "Level6", 996);
 
   cout << "Attempting to create a student" << endl;
-  Student* s1 = new Student("Jt", "Beast" , 2317445, "Data Analytics", 4.00, 2001);
+  Student* s1 = new Student("Jt", "Beast(Student)" , 2317445, "Data Analytics", 4.00, 2001);
   cout << "Attempting to print student" << endl;
   s1->printStudent();
   //Student* s1 = new Student("Data Science", 3.03, 1001);
   cout << "Attempting to create faculty" << endl;
-  Faculty* f1 = new Faculty("Rene", "Professor", 2001);
-  Faculty* f2 = new Faculty("Linstead", "Professor", 2002, "Computer Science", 2001);
+  Faculty* f1 = new Faculty("Rene", "Professor", 2001, "Computer Science", 2317445);
+  Faculty* f2 = new Faculty("Linstead", "Professor", 2002, "Computer Science", 2317445);
   f2->addAdvisee(101);
   f2->addAdvisee(102);
   f2->addAdvisee(103);
@@ -92,28 +93,49 @@ int main(int argc, char** argv){
   printThis->printPerson();
 
 
-  // -------------Start of the program-----------------
+  // -------------Start of the program-----------------(jk more testing still)
 
-  // Write to file
-  ofstream file_out("facultyTable");
-  cout << "printing p1: " << p1 << endl;
-  file_out << p1;
-  //file_out << p2;
-  file_out.close();
+  cout << "\n\n\ni am the captain now" << endl;
+
+  SpecialBST<Faculty*>* masterFaculty = new SpecialBST<Faculty*>();
+  masterFaculty->insert(f1);
+  masterFaculty->insert(f2);
+
+  SpecialBST<Student*>* masterStudent = new SpecialBST<Student*>();
+  masterStudent->insert(s1);
+
+  // Write to files
+
+  ofstream faculty_out("facultyTable");
+  masterFaculty->serializeTree(faculty_out);
+  faculty_out.close();
+
+  ofstream student_out("studentTable");
+  masterStudent->serializeTree(student_out);
+  student_out.close();
+
+  // that was easy (it wasn't, but it sure looks easy)
+
+  // ---------------------------------------------------------------
+
   // Check current directory for studentTable and facultyTable
   ifstream facultyTable, studentTable;
   facultyTable.open("facultyTable");
-  Person testPerson1, testPerson2;
-  if (facultyTable.is_open()){
-    cout << "facultyTable is open" << endl;
-    facultyTable >> testPerson1;
-    cout << testPerson1 << endl;
-    //facultyTable >> testPerson2;
-    //cout << "person 1 name and id is: " << testPerson1.getName() << " and " << testPerson1.getId() << endl;
-    //cout << "person 2 name and id is: " << testPerson2.getName() << " and " << testPerson2.getId() << endl;
+  studentTable.open("studentTable");
+
+  if (!facultyTable.is_open() || !studentTable.is_open()){
+    cout << "serialized files do not exist, create empty trees" << endl;
+    cout << "beep the empty boop" << endl;
   }
   else{
-    cout << "facultyTable is not open" << endl;
+    cout << "The serialized files exist!!!" << endl;
+    cout << "beep the not-so-empty boops" << endl;
+    // Person testPerson1, testPerson2;
+    // facultyTable >> testPerson1;
+    // cout << testPerson1 << endl;
+    // facultyTable >> testPerson2;
+    // cout << "person 1 name and id is: " << testPerson1.getName() << " and " << testPerson1.getId() << endl;
+    // cout << "person 2 name and id is: " << testPerson2.getName() << " and " << testPerson2.getId() << endl;
   }
 
 

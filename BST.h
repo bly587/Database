@@ -16,6 +16,7 @@ class BST{
     bool search(T elem);
     void insert(T elem);
     bool deleteNode(T elem);
+    void printTree();
 
     //getter
     TreeNode<T>* getRoot();
@@ -24,7 +25,6 @@ class BST{
     bool isEmpty();
     TreeNode<T>* getMin();
     TreeNode<T>* getMax();
-    void printTree();
     T recPrint(TreeNode<T> *node); // recursive print
     void recDelete(TreeNode<T> *node);
 };

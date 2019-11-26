@@ -20,6 +20,8 @@ class Faculty : public Person{
     void addAdvisee(int id);
     //methods
     void printFaculty();
+    // serialize
+    ostream& serialize(ostream& o);
 
 };
 //constructors
@@ -60,4 +62,21 @@ void Faculty::printFaculty()
 void Faculty::addAdvisee(int id)
 {
   m_advisees->insertFront(id);
+}
+
+// serializes faculty data to file via ostream& o
+ostream& Faculty::serialize(ostream& o){
+  o << getName() << endl;
+  o << getLevel() << endl;
+  o << getId() << endl;
+  o << m_department << endl;
+  // Gets size of list and saves it since our removeFront will change the size during the loop
+  int linkedListSize = m_advisees->getSize();
+  // Loop through linked list
+  for (int i = 0; i < linkedListSize; ++i){
+    o << m_advisees->removeFront() << endl; // it is okay for us to remove since these serializations will happen at the end of the program
+  }
+  o << endl;
+
+  return o;
 }
