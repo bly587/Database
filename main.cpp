@@ -82,15 +82,32 @@ int main(int argc, char** argv){
   theTree->insert(p4);
   theTree->insert(p5);
   theTree->insert(p6);
+
   cout << "Max Number getting printed" << endl;
   cout << p1->getId() << endl;
   cout << "Attempting to find Name3 person in tree" << endl;
   Person* temp = theTree->find(1003);
   cout << temp->getName() << endl;
+
+  //Creating student tree
+  BST<Student*>* stuTree = new BST<Student*>();
+  Student* s7 = new Student("Name1", "Level1", 1001, "Math", 4.00, 2001);
+  Student* s2 = new Student("Name2", "Level2", 1002, "Math2", 4.00, 2001);
+  Student* s3 = new Student("Name3", "Level3", 1003, "Math3", 4.00, 2001);
+  Student* s4 = new Student("Name4", "Level4", 1004, "Math4", 4.00, 2001);
+  Student* s5 = new Student("Name5", "Level5", 1005, "Math5", 4.00, 2001);
+  Student* s6 = new Student("Name6", "Level6", 1006, "Math6", 4.00, 2001);
+  stuTree->insert(s7);
+  stuTree->insert(s2);
+  stuTree->insert(s3);
+  stuTree->insert(s4);
+  stuTree->insert(s5);
+  stuTree->insert(s6);
+
   cout << "Attempting to print entire tree" << endl;
-  //print person (must be different for each tree, like must be set to certain class type)
-  Person* printThis = theTree->recPrint(theTree->getRoot());
-  printThis->printPerson();
+  //print person must be different for each person
+  stuTree->recPrintStudent(stuTree->getRoot());
+  cout << "\n" << endl;
 
 
   // -------------Start of the program-----------------(jk more testing still)

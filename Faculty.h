@@ -50,8 +50,8 @@ void Faculty::setDepartment(string depo)
 
 void Faculty::printFaculty()
 {
-  cout << "Faculty: " << endl;
   cout << "Name: " << getName() << endl;
+  cout << "ID: " << getId() << endl;
   cout << "Level: " << getLevel() << endl;
   cout << "Department: " << getDepartment() << endl;
   cout << "List of Students: ";

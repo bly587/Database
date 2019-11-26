@@ -25,8 +25,10 @@ class BST{
     bool isEmpty();
     TreeNode<T>* getMin();
     TreeNode<T>* getMax();
-    T recPrint(TreeNode<T> *node); // recursive print
+    //T recPrint(TreeNode<T> *node); // recursive print
     void recDelete(TreeNode<T> *node);
+    void recPrintFaculty(TreeNode<T> *node);
+    void recPrintStudent(TreeNode<T> *node);
 };
 
 template <class T>
@@ -37,6 +39,32 @@ BST<T>::BST(){
 template <class T>
 BST<T>::~BST(){
   recDelete(root);
+}
+
+template <class T>
+void BST<T>::recPrintFaculty(TreeNode<T> *node){
+  if (node == NULL){
+    return;
+  }
+  else
+  {
+    recPrintFaculty(node->left);
+    node->obj->printFaculty();
+    recPrintFaculty(node->right);
+  }
+}
+
+template <class T>
+void BST<T>::recPrintStudent(TreeNode<T> *node){
+  if (node == NULL){
+    return;
+  }
+  else
+  {
+    recPrintStudent(node->left);
+    node->obj->printStudent();
+    recPrintStudent(node->right);
+  }
 }
 
 template <class T>
@@ -54,25 +82,11 @@ void BST<T>::recDelete(TreeNode<T> *node){
   }
 }
 
-template <class T>
-T BST<T>::recPrint(TreeNode<T> *node){
-  if (node == NULL){
-    return NULL;
-  }
-  else
-  {
-    recPrint(node->left);
-    recPrint(node->right);
-  }
-  return node->obj;
-  //cout << **node->obj << endl;
-}
-
-template <class T>
-void BST<T>::printTree(){
-  cout << "Printing tree where root = " << root << endl;
-  recPrint(root);
-}
+// template <class T>
+// void BST<T>::printTree(){
+//   cout << "Printing tree where root = " << root << endl;
+//   recPrint(root);
+// }
 
 template <class T>
 TreeNode<T>* BST<T>::getMax(){

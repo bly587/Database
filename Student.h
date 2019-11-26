@@ -73,8 +73,8 @@ void Student::setAdvisor(int advisor)
 //methods
 void Student::printStudent()
 {
-  cout << "Student: " << endl;
   cout << "Name: " << getName() << endl;
+  cout << "ID: " << getId() << endl;
   cout << "Major: " << getMajor() << endl;
   cout << "GPA: " << getGPA() << endl;
   cout << "Advisor: " << getAdvisor() << endl;
