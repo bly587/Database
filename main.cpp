@@ -65,12 +65,16 @@ int main(int argc, char** argv){
   cout << "Attempting to print student" << endl;
   s1->printStudent();
   //Student* s1 = new Student("Data Science", 3.03, 1001);
+  //creating faculty tree
+  BST<Faculty*>* facTree = new BST<Faculty*>();
   cout << "Attempting to create faculty" << endl;
   Faculty* f1 = new Faculty("Rene", "Professor", 2001, "Computer Science", 2317445);
   Faculty* f2 = new Faculty("Linstead", "Professor", 2002, "Computer Science", 2317445);
   f2->addAdvisee(101);
   f2->addAdvisee(102);
   f2->addAdvisee(103);
+  facTree->insert(f1);
+  facTree->insert(f2);
   cout << "Attempting to print out faculty" << endl;
   f1->printFaculty();
   f2->printFaculty();
@@ -108,6 +112,7 @@ int main(int argc, char** argv){
   //print person must be different for each person
   stuTree->recPrintStudent(stuTree->getRoot());
   cout << "\n" << endl;
+
 
 
   // -------------Start of the program-----------------(jk more testing still)
@@ -160,7 +165,7 @@ int main(int argc, char** argv){
   int userInput = 0;
   while(userInput != 14)
   {
-    cout << "Here are your options\n" << endl;
+    cout << "\nHere are your options\n" << endl;
 
     cout << "1) Print all students and their information (sorted by ascending id #)" << endl;
     cout << "2) Print all faculty and their information (sorted by ascending id #)" << endl;
@@ -196,8 +201,22 @@ int main(int argc, char** argv){
               stuTree->find(lookId)->printStudent();
               break;
 
+      case 4:
+              lookId;
+              cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
+              cin >> lookId;
+              facTree->find(lookId)->printFaculty();
+              break;
+
+      case 7: //everytime you create a student make sure you add them to the advisors list of advisees 
+
+
       case 14:
               return 0;
+              break;
+
+      default:
+              cout << "Invalid input. Try again!" << endl;
               break;
     }
   }

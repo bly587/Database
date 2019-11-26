@@ -78,6 +78,7 @@ void Student::printStudent()
   cout << "Major: " << getMajor() << endl;
   cout << "GPA: " << getGPA() << endl;
   cout << "Advisor: " << getAdvisor() << endl;
+  cout << "\n" << endl;
 }
 
 // serializes student data to file via ostream& o

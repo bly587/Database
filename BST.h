@@ -176,34 +176,34 @@ T BST<T>::find(int num)
 {
   if(root == NULL)
   {
-    cout << "BST Empty" << endl;
+    cout << "BST Empty!" << endl;
     return NULL;
   }
   TreeNode<T>* current = root;
   int temp = current->getKey();
-  cout << "Entering loop" << endl;
+  //cout << "Entering loop" << endl;
   while (temp!= num)
   {
-    cout << "Temp: " << temp << endl;
-    cout << "Num: " << num << endl;
+  //  cout << "Temp: " << temp << endl;
+    //cout << "Num: " << num << endl;
     if (num < temp)
     {
-      cout << "going left" << endl;
+      //cout << "going left" << endl;
       current = current->left;
     }
     else if(num > temp)
     {
-      cout << "current key: " << current->getKey() << endl;
-      cout << "going right" << endl;
+      //cout << "current key: " << current->getKey() << endl;
+      //cout << "going right" << endl;
       current = current->right;
-      cout << "current key: " << current->getKey() << endl;
+    //  cout << "current key: " << current->getKey() << endl;
     }
     else if(current == NULL)
     {
       return NULL;
     }
     temp = current->getKey();
-    cout << "The number of new root: " << temp << endl;
+    //cout << "The number of new root: " << temp << endl;
   }
   //exit loop with correct object
   return current->getObject();
