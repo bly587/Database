@@ -88,3 +88,9 @@ int main(int argc, char** argv){
 
   return 0;
 }
+
+//finding a student using id number
+// Student find(BST<Person*>int num)
+// {
+//
+// }

@@ -98,22 +98,22 @@ void BST<T>::insert(T elem){
   // check if value exists in tree already before proceding
   // every key is unique, so if it is already in the tree, we cannot insert
 
-  TreeNode<T> *node = new TreeNode<T>(elem);
-  cout << "new node= " << **node->obj << endl;
-  cout << "new node= " << **node->obj << endl; // Bro this changes after the first cout like how the heck
+  TreeNode<T> *node = new TreeNode<T>(elem, elem->getId());
+  cout << "new node= " << node->getKey() << endl;
+//cout << "new node= " << **node->key << endl; // Bro this changes after the first cout like how the heck
   // int value = node->key; do i need this
 
   if (root == NULL){ // empty tree
     root = node;
     cout << "first node entered as root" << endl;
-    cout << "root= "<< **node->obj << endl; //not printing correct value
+    cout << "root= "<< *node->getObject() << endl; //not printing correct value
   }
   else{
     // tree is not empty
     // let's find the insertion point
     TreeNode<T> *current = root;
     TreeNode<T> *parent = NULL;
-    cout << "current/root= "<< **root->obj << endl; //not printing correct value
+    cout << "current/root= "<< *root->getObject() << endl; //not printing correct value
 
     int deez = 0;
     int nuts = 0;
@@ -121,8 +121,10 @@ void BST<T>::insert(T elem){
     while(deez == nuts){
       parent = current;
       cout << "about to compare..." << endl;
+      cout << "Elem ID: " << elem->getId() << endl;
+      cout << "Curr ID: " << current->getKey() << endl;
       // Compare objects --> for assignment_5, we make comparison operators in the object class itself
-      if (*elem < **current->obj){
+      if (elem->getId() < current->getKey()){
         // go left
         current = current->left;
         cout << "goin left" << endl;
@@ -152,13 +154,16 @@ T BST<T>::find(int num)
     cout << "BST Empty" << endl;
     return NULL;
   }
-  TreeNode<T> *current = root;
+  TreeNode<T>* current = root;
   Person* temp = (T)current->obj;
-  while (temp->getId() != num){
-    if (num < temp->getId()){
+  while (temp->getId() != num)
+  {
+    if (num < temp->getId())
+    {
       current = current->left;
     }
-    else{
+    else
+    {
       current = current->right;
     }
 
@@ -169,6 +174,7 @@ T BST<T>::find(int num)
     {
       return (T)current->obj;
     }
+    temp = (T)current->obj;
   }
 }
 // this function may change to return a TreeNode<T>* for assignment_5
