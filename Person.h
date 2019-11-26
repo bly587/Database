@@ -25,6 +25,7 @@ class Person{
     friend bool operator < (Person &obj1, Person &obj2);
     friend bool operator > (Person &obj1, Person &obj2);
     friend ostream& operator << (ostream& o, Person& p);
+    void printPerson();
 
   private:
     string m_name;
@@ -52,6 +53,14 @@ Person::Person(string name, string level, int id)
 Person::~Person()
 {
 
+}
+
+//method
+void Person::printPerson()
+{
+  cout << "Name: " << getName() << endl;
+  cout << "Level: " << getLevel() << endl;
+  cout << "ID: " << getId() << endl;
 }
 
 //getters
