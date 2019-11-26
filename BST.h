@@ -155,27 +155,33 @@ T BST<T>::find(int num)
     return NULL;
   }
   TreeNode<T>* current = root;
-  Person* temp = (T)current->obj;
-  while (temp->getId() != num)
+  int temp = current->getKey();
+  cout << "Entering loop" << endl;
+  while (temp!= num)
   {
-    if (num < temp->getId())
+    cout << "Temp: " << temp << endl;
+    cout << "Num: " << num << endl;
+    if (num < temp)
     {
+      cout << "going left" << endl;
       current = current->left;
     }
-    else
+    else if(num > temp)
     {
+      cout << "current key: " << current->getKey() << endl;
+      cout << "going right" << endl;
       current = current->right;
+      cout << "current key: " << current->getKey() << endl;
     }
-
-    if (current == NULL){ //  value not in tree
+    else if(current == NULL)
+    {
       return NULL;
     }
-    else
-    {
-      return (T)current->obj;
-    }
-    temp = (T)current->obj;
+    temp = current->getKey();
+    cout << "The number of new root: " << temp << endl;
   }
+  //exit loop with correct object
+  return current->getObject();
 }
 // this function may change to return a TreeNode<T>* for assignment_5
 template <class T>
