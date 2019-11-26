@@ -187,14 +187,17 @@ int main(int argc, char** argv){
     switch (userInput)
     {
       case 1:
+              //print student tree in ascending order
               stuTree->recPrintStudent(stuTree->getRoot());
               break;
 
       case 2:
+              //print faculty tree in ascending order
               masterFaculty->recPrintFaculty(masterFaculty->getRoot());
               break;
 
       case 3:
+              //print information of student given ID #
               int lookId;
               cout << "Enter the student ID# of the student you'd like to look up." << endl;
               cin >> lookId;
@@ -202,16 +205,23 @@ int main(int argc, char** argv){
               break;
 
       case 4:
-              lookId;
+              //print information of faculty given ID #
               cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
               cin >> lookId;
               facTree->find(lookId)->printFaculty();
               break;
 
-      case 5: //print info of student's faculty advisor
+      case 5: //print info of student's faculty advisor given student id
+              cout << "Enter the student's ID#" << endl;
+              cin >> lookId;
+              lookId = stuTree->find(lookId)->getAdvisor();
+              cout << "Advisor's name is: " << facTree->find(lookId)->getName() << endl;
               break;
 
-      case 6: //print all names of facutlies advisees 
+      case 6: //print all names of facutlies advisees given faculty ID #
+              cout << "Enter the faculty's ID#" << endl;
+              cin >> lookId;
+              //need to get linked list and then use find() method on each value given to display names of students
               break;
 
       case 7: //everytime you create a student make sure you add them to the advisors list of advisees
