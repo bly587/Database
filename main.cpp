@@ -155,12 +155,52 @@ int main(int argc, char** argv){
     // cout << "person 2 name and id is: " << testPerson2.getName() << " and " << testPerson2.getId() << endl;
   }
 
+  // ---------------------------------------------------------------
+  // Main Menu time
+  int userInput = 0;
+  while(userInput != 14)
+  {
+    cout << "Here are your options\n" << endl;
+
+    cout << "1) Print all students and their information (sorted by ascending id #)" << endl;
+    cout << "2) Print all faculty and their information (sorted by ascending id #)" << endl;
+    cout << "3) Find and display student information given the students id" << endl;
+    cout << "4) Find and display faculty information given the faculty id" << endl;
+    cout << "5) Given a student’s id, print the name and info of their faculty advisor" << endl;
+    cout << "6) Given a faculty id, print ALL the names and info of his/her advisees" << endl;
+    cout << "7) Add a new student" << endl;
+    cout << "8) Delete a student given the id" << endl;
+    cout << "9) Add a new faculty member" << endl;
+    cout << "10) Delete a faculty member given the id" << endl;
+    cout << "11) Change a student’s advisor given the student id and the new faculty id" << endl;
+    cout << "12) Remove an advisee from a faculty member given the ids" << endl;
+    cout << "13) Rollback" << endl;
+    cout << "14) Exit" << endl;
+    //get user input
+    cin >> userInput;
+    //switch statement for different operations
+    switch (userInput)
+    {
+      case 1:
+              stuTree->recPrintStudent(stuTree->getRoot());
+              break;
+
+      case 2:
+              masterFaculty->recPrintFaculty(masterFaculty->getRoot());
+              break;
+
+      case 3:
+              int lookId;
+              cout << "Enter the student ID# of the student you'd like to look up." << endl;
+              cin >> lookId;
+              stuTree->find(lookId)->printStudent();
+              break;
+
+      case 14:
+              return 0;
+              break;
+    }
+  }
 
   return 0;
 }
-
-//finding a student using id number
-// Student find(BST<Person*>int num)
-// {
-//
-// }
