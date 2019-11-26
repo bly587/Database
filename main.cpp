@@ -208,7 +208,14 @@ int main(int argc, char** argv){
               facTree->find(lookId)->printFaculty();
               break;
 
-      case 7: //everytime you create a student make sure you add them to the advisors list of advisees 
+      case 5: //print info of student's faculty advisor
+              break;
+
+      case 6: //print all names of facutlies advisees 
+              break;
+
+      case 7: //everytime you create a student make sure you add them to the advisors list of advisees
+              break;
 
 
       case 14:
