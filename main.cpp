@@ -50,7 +50,6 @@ int main(int argc, char** argv){
   intTree->insert(e);
   intTree->printTree();
   delete intTree;
-  */
 
   BST<Person*>* theTree = new BST<Person*>();
   Person* p1 = new Person("Name1", "Level1", 1001);
@@ -133,7 +132,6 @@ int main(int argc, char** argv){
   masterStudent->insert(s6);
   masterStudent->insert(s7);
   */
-
 
   // ---------------------------------------------------------------
 
@@ -247,8 +245,8 @@ int main(int argc, char** argv){
       case 5: //print info of student's faculty advisor given student id
               cout << "Enter the student's ID#" << endl;
               cin >> lookId;
-              lookId = stuTree->find(lookId)->getAdvisor();
-              cout << "Advisor's name is: " << facTree->find(lookId)->getName() << endl;
+              // lookId = stuTree->find(lookId)->getAdvisor();
+              // cout << "Advisor's name is: " << facTree->find(lookId)->getName() << endl;
               break;
 
       case 6: //print all names of facutlies advisees given faculty ID #
