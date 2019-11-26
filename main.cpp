@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "BST.h"
 //#include "Person.h"
 #include "Faculty.h"
@@ -85,6 +86,32 @@ int main(int argc, char** argv){
   cout << "Attempting to find Name3 person in tree" << endl;
   Person* temp = theTree->find(1003);
   cout << temp->getName() << endl;
+
+
+  // -------------Start of the program-----------------
+
+  // Write to file
+  ofstream file_out("facultyTable");
+  cout << "printing p1: " << p1 << endl;
+  file_out << p1;
+  //file_out << p2;
+  file_out.close();
+  // Check current directory for studentTable and facultyTable
+  ifstream facultyTable, studentTable;
+  facultyTable.open("facultyTable");
+  Person testPerson1, testPerson2;
+  if (facultyTable.is_open()){
+    cout << "facultyTable is open" << endl;
+    facultyTable >> testPerson1;
+    cout << testPerson1 << endl;
+    //facultyTable >> testPerson2;
+    //cout << "person 1 name and id is: " << testPerson1.getName() << " and " << testPerson1.getId() << endl;
+    //cout << "person 2 name and id is: " << testPerson2.getName() << " and " << testPerson2.getId() << endl;
+  }
+  else{
+    cout << "facultyTable is not open" << endl;
+  }
+
 
   return 0;
 }

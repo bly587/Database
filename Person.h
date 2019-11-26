@@ -25,6 +25,7 @@ class Person{
     friend bool operator < (Person &obj1, Person &obj2);
     friend bool operator > (Person &obj1, Person &obj2);
     friend ostream& operator << (ostream& o, Person& p);
+    friend istream& operator >> (istream& i, Person& p);
 
   private:
     string m_name;
@@ -109,6 +110,16 @@ bool operator > (Person &obj1, Person &obj2){
 
 // Overload Print
 ostream& operator << (ostream& o, Person& p){
-  o << "id=" << p.m_id << endl;
+  cout << "doing the prints" << endl;
+  o << p.m_name << endl;
+  o << p.m_level << endl;
+  o << p.m_id << endl;
   return o;
+}
+
+istream& operator >> (istream& i, Person& p){
+  i >> p.m_name;
+  i >> p.m_level;
+  i >> p.m_id;
+  return i;
 }
