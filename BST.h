@@ -17,13 +17,15 @@ class BST{
     void insert(T elem);
     bool deleteNode(T elem);
 
+    //getter
+    TreeNode<T>* getRoot();
     // helper functions
     TreeNode<T>* getSuccessor(TreeNode<T> *d);
     bool isEmpty();
     TreeNode<T>* getMin();
     TreeNode<T>* getMax();
     void printTree();
-    void recPrint(TreeNode<T> *node); // recursive print
+    T recPrint(TreeNode<T> *node); // recursive print
     void recDelete(TreeNode<T> *node);
 };
 
@@ -38,6 +40,12 @@ BST<T>::~BST(){
 }
 
 template <class T>
+TreeNode<T>* BST<T>::getRoot()
+{
+  return root;
+}
+
+template <class T>
 void BST<T>::recDelete(TreeNode<T> *node){
   if (node){
     recDelete(node->left);
@@ -47,14 +55,17 @@ void BST<T>::recDelete(TreeNode<T> *node){
 }
 
 template <class T>
-void BST<T>::recPrint(TreeNode<T> *node){
+T BST<T>::recPrint(TreeNode<T> *node){
   if (node == NULL){
-    return;
+    return NULL;
   }
-
-  recPrint(node->left);
-  cout << **node->obj << endl;
-  recPrint(node->right);
+  else
+  {
+    recPrint(node->left);
+    recPrint(node->right);
+  }
+  return node->obj;
+  //cout << **node->obj << endl;
 }
 
 template <class T>

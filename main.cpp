@@ -86,6 +86,10 @@ int main(int argc, char** argv){
   cout << "Attempting to find Name3 person in tree" << endl;
   Person* temp = theTree->find(1003);
   cout << temp->getName() << endl;
+  cout << "Attempting to print entire tree" << endl;
+  //print person (must be different for each tree, like must be set to certain class type)
+  Person* printThis = theTree->recPrint(theTree->getRoot());
+  printThis->printPerson();
 
 
   // -------------Start of the program-----------------
