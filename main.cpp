@@ -63,7 +63,7 @@ int main(int argc, char** argv){
   cout << "Attempting to create a student" << endl;
   Student* s1 = new Student("Jt", "Beast(Student)" , 2317445, "Data Analytics", 4.00, 2001);
   cout << "Attempting to print student" << endl;
-  s1->printStudent();
+  // s1->printStudent();
   //Student* s1 = new Student("Data Science", 3.03, 1001);
   //creating faculty tree
   BST<Faculty*>* facTree = new BST<Faculty*>();
@@ -76,8 +76,8 @@ int main(int argc, char** argv){
   facTree->insert(f1);
   facTree->insert(f2);
   cout << "Attempting to print out faculty" << endl;
-  f1->printFaculty();
-  f2->printFaculty();
+  // f1->printFaculty();
+  // f2->printFaculty();
 
   theTree->insert(p1);
   //theTree->printTree();
@@ -110,7 +110,7 @@ int main(int argc, char** argv){
 
   cout << "Attempting to print entire tree" << endl;
   //print person must be different for each person
-  stuTree->recPrintStudent(stuTree->getRoot());
+  //stuTree->recPrintStudent(stuTree->getRoot());
   cout << "\n" << endl;
 
 
@@ -119,24 +119,21 @@ int main(int argc, char** argv){
 
   cout << "\n\n\ni am the captain now" << endl;
 
+  /*
   SpecialBST<Faculty*>* masterFaculty = new SpecialBST<Faculty*>();
-  masterFaculty->insert(f1);
   masterFaculty->insert(f2);
+  masterFaculty->insert(f1);
 
   SpecialBST<Student*>* masterStudent = new SpecialBST<Student*>();
   masterStudent->insert(s1);
+  masterStudent->insert(s2);
+  masterStudent->insert(s3);
+  masterStudent->insert(s4);
+  masterStudent->insert(s5);
+  masterStudent->insert(s6);
+  masterStudent->insert(s7);
+  */
 
-  // Write to files
-
-  ofstream faculty_out("facultyTable");
-  masterFaculty->serializeTree(faculty_out);
-  faculty_out.close();
-
-  ofstream student_out("studentTable");
-  masterStudent->serializeTree(student_out);
-  student_out.close();
-
-  // that was easy (it wasn't, but it sure looks easy)
 
   // ---------------------------------------------------------------
 
@@ -144,21 +141,57 @@ int main(int argc, char** argv){
   ifstream facultyTable, studentTable;
   facultyTable.open("facultyTable");
   studentTable.open("studentTable");
+  // Create trees
+  SpecialBST<Student*>* masterStudent = new SpecialBST<Student*>();
+  SpecialBST<Faculty*>* masterFaculty = new SpecialBST<Faculty*>();
 
-  if (!facultyTable.is_open() || !studentTable.is_open()){
-    cout << "serialized files do not exist, create empty trees" << endl;
-    cout << "beep the empty boop" << endl;
+  if (facultyTable.is_open() && studentTable.is_open()){
+    cout << "\n\n\n\n\n\n\nThe serialized files exist!!!" << endl;
+
+    // deserialize students
+
+    while(true){
+      Student* s = new Student(studentTable);
+      cout << s->getName() << endl;
+
+      if (s->getName() == "done"){ // Breaks out of loop if last node was just filled
+        break;
+      }
+      else{
+        // add student to tree
+        cout << "inserting into tree: " << s->getId() << endl;
+        masterStudent->insert(s);
+      }
+    }
+
+    // ----------------------------------------------------------------------
+    // deserialize faculty members
+
+    while(true){
+      Faculty* f = new Faculty(facultyTable);
+
+      if (f->getName() == "done"){ // Breaks out of loop if last node was just filled
+        break;
+      }
+      else{
+        // add faculty to tree
+        cout << "inserting into tree: " << f->getId() << endl;
+        masterFaculty->insert(f);
+      }
+    }
+
+    // Close ifstream files
+    facultyTable.close();
+    studentTable.close();
+
   }
   else{
-    cout << "The serialized files exist!!!" << endl;
-    cout << "beep the not-so-empty boops" << endl;
-    // Person testPerson1, testPerson2;
-    // facultyTable >> testPerson1;
-    // cout << testPerson1 << endl;
-    // facultyTable >> testPerson2;
-    // cout << "person 1 name and id is: " << testPerson1.getName() << " and " << testPerson1.getId() << endl;
-    // cout << "person 2 name and id is: " << testPerson2.getName() << " and " << testPerson2.getId() << endl;
+    cout << "files don't exist; starting with empty trees" << endl;
   }
+
+  // Create outfiles
+  ofstream faculty_out;
+  ofstream student_out;
 
   // ---------------------------------------------------------------
   // Main Menu time
@@ -188,12 +221,12 @@ int main(int argc, char** argv){
     {
       case 1:
               //print student tree in ascending order
-              stuTree->recPrintStudent(stuTree->getRoot());
+              masterStudent->printTree();
               break;
 
       case 2:
               //print faculty tree in ascending order
-              masterFaculty->recPrintFaculty(masterFaculty->getRoot());
+              masterFaculty->printTree();
               break;
 
       case 3:
@@ -201,14 +234,14 @@ int main(int argc, char** argv){
               int lookId;
               cout << "Enter the student ID# of the student you'd like to look up." << endl;
               cin >> lookId;
-              stuTree->find(lookId)->printStudent();
+              // stuTree->find(lookId)->printStudent();
               break;
 
       case 4:
               //print information of faculty given ID #
               cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
               cin >> lookId;
-              facTree->find(lookId)->printFaculty();
+              // facTree->find(lookId)->printFaculty();
               break;
 
       case 5: //print info of student's faculty advisor given student id
@@ -229,6 +262,18 @@ int main(int argc, char** argv){
 
 
       case 14:
+              // Write to files
+
+              faculty_out.open("facultyTable");
+              student_out.open("studentTable");
+
+              masterFaculty->serializeTree(faculty_out);
+              faculty_out.close();
+
+              masterStudent->serializeTree(student_out);
+              student_out.close();
+
+              // that was easy (it wasn't, but it sure looks easy)
               return 0;
               break;
 

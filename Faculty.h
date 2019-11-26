@@ -13,13 +13,15 @@ class Faculty : public Person{
     Faculty(string name, string level, int id);
     //overload
     Faculty(string name, string level, int id, string department, int student);
+    // deserialize constructor
+    Faculty(istream& i);
     //getters
     string getDepartment();
     //setters
     void setDepartment(string depo);
     void addAdvisee(int id);
     //methods
-    void printFaculty();
+    void print();
     // serialize
     ostream& serialize(ostream& o);
 
@@ -37,6 +39,27 @@ Faculty::Faculty(string name, string level, int id, string department, int stude
   m_advisees = new SLinkedList<int>;
   m_advisees->insertFront(student);
 }
+
+Faculty::Faculty(istream& i) : Person(i){
+  getline(i, m_department); // read in new line char
+  getline(i, m_department); // Read in actual department --> getline used so multiple words can be extracted
+
+  int size; // Represents the amount of advisees an advisor has
+  i >> size;
+  // Initialize linked-list
+  m_advisees = new SLinkedList<int>;
+  // Grab every student id based on size given in file
+  int id;
+  for (int j = 0; j < size; ++j){
+    i >> id;
+    m_advisees->insertFront(id);
+  }
+
+  string temp;
+  getline(i, temp); // Grabs a new line --> end of last id
+  getline(i, temp); // Grabs a new line --> empty line
+}
+
 //getters
 string Faculty::getDepartment()
 {
@@ -48,7 +71,7 @@ void Faculty::setDepartment(string depo)
   m_department = depo;
 }
 
-void Faculty::printFaculty()
+void Faculty::print()
 {
   cout << "Name: " << getName() << endl;
   cout << "ID: " << getId() << endl;
@@ -72,6 +95,7 @@ ostream& Faculty::serialize(ostream& o){
   o << m_department << endl;
   // Gets size of list and saves it since our removeFront will change the size during the loop
   int linkedListSize = m_advisees->getSize();
+  o << linkedListSize << endl;
   // Loop through linked list
   for (int i = 0; i < linkedListSize; ++i){
     o << m_advisees->removeFront() << endl; // it is okay for us to remove since these serializations will happen at the end of the program

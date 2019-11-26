@@ -10,6 +10,8 @@ class Person{
     Person();
     //overloaded
     Person(string name, string level, int id);
+    // deserialize constructor
+    Person(istream& i);
     //destructor
     ~Person();
 
@@ -51,6 +53,13 @@ Person::Person(string name, string level, int id)
   m_name = name;
   m_level = level;
   m_id = id;
+}
+
+Person::Person(istream& i){
+  // getline used for strings and >> for other types
+  getline(i, m_name);
+  getline(i, m_level);
+  i >> m_id;
 }
 
 Person::~Person()
@@ -118,6 +127,7 @@ bool operator > (Person &obj1, Person &obj2){
     return false;
   }
 }
+
 
 // Overload Print
 ostream& operator << (ostream& o, Person& p){

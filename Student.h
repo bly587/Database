@@ -14,6 +14,8 @@ class Student : public Person{
     Student(string name, string level, int id);
     //overload
     Student(string name, string level, int id, string major, double gpa, int advisor);
+    // deserialize
+    Student(istream& i);
     //getters
     string getMajor();
     double getGPA();
@@ -24,7 +26,7 @@ class Student : public Person{
     void setAdvisor(int advisor);
     //methods
     //print all students by ascending number
-    void printStudent();
+    void print();
     // serialize
     ostream& serialize(ostream& o);
 };
@@ -42,6 +44,18 @@ Student::Student(string name, string level, int id, string major, double gpa, in
   m_gpa = gpa;
   m_advisor = advisor;
 }
+
+Student::Student(istream& i) : Person(i){
+  getline(i, m_major); // Read in a new line char
+  getline(i, m_major); // Read in major --> using getline so multiple words can be extracted
+  i >> m_gpa;
+  i >> m_advisor;
+
+  string temp;
+  getline(i, temp); // Grabs a new line --> end of m_advisor
+  getline(i, temp); // Grabs a new line --> actual empty line
+}
+
 //getters
 string Student::getMajor()
 {
@@ -71,9 +85,10 @@ void Student::setAdvisor(int advisor)
   m_advisor = advisor;
 }
 //methods
-void Student::printStudent()
+void Student::print()
 {
   cout << "Name: " << getName() << endl;
+  cout << "Level: " << getLevel() << endl;
   cout << "ID: " << getId() << endl;
   cout << "Major: " << getMajor() << endl;
   cout << "GPA: " << getGPA() << endl;

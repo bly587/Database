@@ -25,10 +25,10 @@ class BST{
     bool isEmpty();
     TreeNode<T>* getMin();
     TreeNode<T>* getMax();
-    //T recPrint(TreeNode<T> *node); // recursive print
+    void recPrint(TreeNode<T> *node); // recursive print
     void recDelete(TreeNode<T> *node);
-    void recPrintFaculty(TreeNode<T> *node);
-    void recPrintStudent(TreeNode<T> *node);
+    // void recPrintFaculty(TreeNode<T> *node);
+    // void recPrintStudent(TreeNode<T> *node);
 };
 
 template <class T>
@@ -41,31 +41,31 @@ BST<T>::~BST(){
   recDelete(root);
 }
 
-template <class T>
-void BST<T>::recPrintFaculty(TreeNode<T> *node){
-  if (node == NULL){
-    return;
-  }
-  else
-  {
-    recPrintFaculty(node->left);
-    node->obj->printFaculty();
-    recPrintFaculty(node->right);
-  }
-}
-
-template <class T>
-void BST<T>::recPrintStudent(TreeNode<T> *node){
-  if (node == NULL){
-    return;
-  }
-  else
-  {
-    recPrintStudent(node->left);
-    node->obj->printStudent();
-    recPrintStudent(node->right);
-  }
-}
+// template <class T>
+// void BST<T>::recPrintFaculty(TreeNode<T> *node){
+//   if (node == NULL){
+//     return;
+//   }
+//   else
+//   {
+//     recPrintFaculty(node->left);
+//     node->obj->printFaculty();
+//     recPrintFaculty(node->right);
+//   }
+// }
+//
+// template <class T>
+// void BST<T>::recPrintStudent(TreeNode<T> *node){
+//   if (node == NULL){
+//     return;
+//   }
+//   else
+//   {
+//     recPrintStudent(node->left);
+//     node->obj->printStudent();
+//     recPrintStudent(node->right);
+//   }
+// }
 
 template <class T>
 TreeNode<T>* BST<T>::getRoot()
@@ -82,11 +82,22 @@ void BST<T>::recDelete(TreeNode<T> *node){
   }
 }
 
-// template <class T>
-// void BST<T>::printTree(){
-//   cout << "Printing tree where root = " << root << endl;
-//   recPrint(root);
-// }
+template <class T>
+void BST<T>::printTree(){
+  cout << "Printing tree where root = " << root->obj->getId() << endl;
+  recPrint(root);
+}
+
+template <class T>
+void BST<T>::recPrint(TreeNode<T>* node){
+  if (node == NULL){
+    return;
+  }
+  
+  recPrint(node->left);
+  node->obj->print();
+  recPrint(node->right);
+}
 
 template <class T>
 TreeNode<T>* BST<T>::getMax(){
@@ -119,13 +130,13 @@ TreeNode<T>* BST<T>::getMin(){
 
 template <class T>
 void BST<T>::insert(T elem){
-  cout << "inserting " << *elem << endl;
+  cout << "inserting    " << *elem << endl;
   // check if value exists in tree already before proceding
   // every key is unique, so if it is already in the tree, we cannot insert
 
   TreeNode<T> *node = new TreeNode<T>(elem, elem->getId());
   cout << "new node= " << node->getKey() << endl;
-//cout << "new node= " << **node->key << endl; // Bro this changes after the first cout like how the heck
+  //cout << "new node= " << **node->key << endl; // Bro this changes after the first cout like how the heck
   // int value = node->key; do i need this
 
   if (root == NULL){ // empty tree

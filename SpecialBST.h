@@ -20,6 +20,7 @@ SpecialBST<T>::SpecialBST() : BST<T>(){}
 template <class T>
 void SpecialBST<T>::serializeTree(ostream& o){
   recSerialize(this->getRoot(), o);
+  o << "done" << endl; // adds marker at the end so deserializer knows when to stop input
   cout << "tree HAS BEEN EPICLY serialized" << endl;
 }
 
