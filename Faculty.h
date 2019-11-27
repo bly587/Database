@@ -83,7 +83,7 @@ void Faculty::print()
   cout << "ID: " << getId() << endl;
   cout << "Level: " << getLevel() << endl;
   cout << "Department: " << getDepartment() << endl;
-  cout << "List of Students: ";
+  cout << "List of Students: " << endl;
   m_advisees->printList();
   cout << "\n" << endl;;
 }
