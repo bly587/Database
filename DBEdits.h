@@ -23,4 +23,5 @@ DBEdits::DBEdits(){
 DBEdits::~DBEdits(){
   delete stackOfAdds;
   delete stackOfRemoves;
+  cout << "stacks have been deleted" << endl;
 }

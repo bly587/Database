@@ -13,7 +13,7 @@ class BST{
     ~BST();
 
     T find(int num);
-    bool search(T elem);
+    int search(T elem);
     void insert(T elem);
     bool deleteNode(T elem);
     void printTree();
@@ -27,6 +27,7 @@ class BST{
     TreeNode<T>* getMax();
     void recPrint(TreeNode<T> *node); // recursive print
     void recDelete(TreeNode<T> *node);
+    int recSearch(TreeNode<T>* node, T elem, TreeNode<T>* correctNode);
     // void recPrintFaculty(TreeNode<T> *node);
     // void recPrintStudent(TreeNode<T> *node);
 };
@@ -41,32 +42,6 @@ BST<T>::~BST(){
   recDelete(root);
   cout << "Tree deleted" << endl;
 }
-
-// template <class T>
-// void BST<T>::recPrintFaculty(TreeNode<T> *node){
-//   if (node == NULL){
-//     return;
-//   }
-//   else
-//   {
-//     recPrintFaculty(node->left);
-//     node->obj->printFaculty();
-//     recPrintFaculty(node->right);
-//   }
-// }
-//
-// template <class T>
-// void BST<T>::recPrintStudent(TreeNode<T> *node){
-//   if (node == NULL){
-//     return;
-//   }
-//   else
-//   {
-//     recPrintStudent(node->left);
-//     node->obj->printStudent();
-//     recPrintStudent(node->right);
-//   }
-// }
 
 template <class T>
 TreeNode<T>* BST<T>::getRoot()
@@ -228,19 +203,20 @@ T BST<T>::find(int num)
   //exit loop with correct object (if we made it here, we found the node)
   return current->getObject();
 }
+
 // this function may change to return a TreeNode<T>* for assignment_5
 template <class T>
-bool BST<T>::search(T elem){
-
+int BST<T>::search(T elem){
+  /*
   // if the tree is empty
   if (root == NULL){
-    return false;
+    return NULL;
   }
 
   // made it here? the tree is for shizzle not empty
   TreeNode<T> *current = root;
-  while ((T)current != (T)elem){
-    if ((T)elem < (T)current){
+  while (current != elem){
+    if (elem < current){
       current = current->left;
     }
     else{
@@ -248,10 +224,46 @@ bool BST<T>::search(T elem){
     }
 
     if (current == NULL){ //  value not in tree
-      return false;
+      cout << "could not find element in tree" << endl;
+      return NULL;
     }
   }
-  return true;
+  return current;
+  */
+  int t = recSearch(this->root, elem, NULL);
+  cout << "t=" << t << endl;
+  return t;
+}
+
+template <class T>
+int BST<T>::recSearch(TreeNode<T>* node, T elem, TreeNode<T>* correctNode){
+  if (node == NULL){
+    cout << "node is null. returning: " << correctNode << endl;
+    return 0;
+  }
+  else{
+    cout << "recursion: " << node->key << endl;
+    cout << "node->obj= " << node->obj << endl;
+    cout << "elem= " << elem << endl;
+
+
+    // If the elem matches the obj of our current node, return that node
+    if (node->obj == elem){
+      cout << "MADE IT!!!" << endl;
+      cout << "correct node pointer= " << node << endl;
+      cout << "correct obj pointer= " << node->obj << endl;
+      cout << "correct key= " << node->key << endl;
+      correctNode = node;
+      return correctNode->key;
+    }
+
+    cout << "running left" << endl;
+    recSearch(node->left, elem, correctNode);
+    cout << "running right" << endl;
+    recSearch(node->right, elem, correctNode);
+
+  }
+
 }
 
 template <class T>
@@ -260,16 +272,23 @@ bool BST<T>::deleteNode(T elem){
   if (root == NULL) // tree is empty
     return false;
 
+
   TreeNode<T> *parent = root;
   TreeNode<T> *current = root;
   bool isLeft = true;
+  // Grabs the node with this element SO we can find its key
+  //TreeNode<T> *nodeToFind = search(elem);
+  //cout << nodeToFind << endl;
+  int key = search(elem);
+  cout << "here? key= " << key << endl;
 
   // let's attempt to find the node to be deleted
-  while (current != elem)
+  while (current->key != key)
   {
     parent = current;
+    cout << "current: " << current << endl;
 
-    if (elem < current){
+    if (key < current->key){
       // go left
       isLeft = true;
       current = current->left;
@@ -282,11 +301,13 @@ bool BST<T>::deleteNode(T elem){
 
     if (current == NULL){
       // value doesn't exist
+      cout << "could not find node" << endl;
       return false;
     }
   }
 
   // if we make it here, then we have found the node to be deleted
+  cout << "found node to be deleted" << endl;
 
   // if node is external / has 0 children / is a leaf
   if (current->left == NULL && current->right == NULL){
@@ -345,6 +366,7 @@ bool BST<T>::deleteNode(T elem){
 
     successor->left = current->left;
   }
+  cout << "node successfully deleted?" << endl;
   return true;
 }
 

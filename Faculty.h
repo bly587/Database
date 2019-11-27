@@ -11,6 +11,8 @@ class Faculty : public Person{
 
     //constructor
     Faculty(string name, string level, int id);
+    // somewhat overloaded
+    Faculty(string name, string level, int id, string department);
     //overload
     Faculty(string name, string level, int id, string department, int student);
     // deserialize constructor
@@ -21,6 +23,7 @@ class Faculty : public Person{
     //setters
     void setDepartment(string depo);
     void addAdvisee(int id);
+    void removeAdvisee(int id);
     //methods
     void print();
     // serialize
@@ -31,6 +34,11 @@ class Faculty : public Person{
 Faculty::Faculty(string name, string level, int id) : Person(name, level, id)
 {
   m_department = "";
+  m_advisees = new SDoublyLinkedList<int>;
+}
+
+Faculty::Faculty(string name, string level, int id, string department) : Person(name, level, id){
+  m_department = department;
   m_advisees = new SDoublyLinkedList<int>;
 }
 
@@ -83,14 +91,19 @@ void Faculty::print()
   cout << "ID: " << getId() << endl;
   cout << "Level: " << getLevel() << endl;
   cout << "Department: " << getDepartment() << endl;
-  cout << "List of Students: ";
+  cout << "List of Students: \n";
   m_advisees->printList();
-  cout << "\n" << endl;;
+  cout << "\n" << endl;
 }
 
 void Faculty::addAdvisee(int id)
 {
   m_advisees->insertFront(id);
+}
+
+void Faculty::removeAdvisee(int id)
+{
+  m_advisees->remove(id);
 }
 
 // serializes faculty data to file via ostream& o

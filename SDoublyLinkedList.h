@@ -131,7 +131,7 @@ SListNode<T>* SDoublyLinkedList<T>::remove(T elem)
     return NULL;
   }
   //iterate through list
-  T* curr = front;
+  SListNode<T>* curr = front;
   //run loop until data is the data we are looking for
   while(curr->data != elem)
   {

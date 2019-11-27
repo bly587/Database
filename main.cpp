@@ -190,6 +190,7 @@ int main(int argc, char** argv){
   ofstream faculty_out;
   ofstream student_out; // Create outfiles early because they cannot be declared in the switch/case
   string rollItBack;
+  DBEdits* dbe = new DBEdits();
 
   // ---------------------------------------------------------------
   // Main Menu time
@@ -319,7 +320,7 @@ int main(int argc, char** argv){
                 }
 
               }
-              else{ // id_choice == 2
+              else{ // id_choice == 2 --> randomly generate
                 id = 42069;
               }
 
@@ -390,6 +391,8 @@ int main(int argc, char** argv){
                 f->addAdvisee(id);
 
                 // Add this student to stack of adds
+                dbe->stackOfAdds->push(s);
+                dbe->lastMoveWasAdd = true;
 
               }
               // information is wrong
@@ -400,12 +403,136 @@ int main(int argc, char** argv){
 
               break;
       }
-      case 8:
-              cout << "case 8" << endl;
+      case 8: // delete a student given the id
+      {
+
+              cin.ignore(); // need to catch the last input's newline char so our input will work here
+
+              string str_id;
+              int student_id;
+              cout << "Please input the id of the student you want to delete: " << endl;
+              getline(cin, str_id);
+              // Try catch block punishes the user for entering something that isnt a number (or too large to be an integer)
+              try{
+                student_id = stoi(str_id);
+              }
+              catch (invalid_argument e){
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e){
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+
+              // Check if student exists in file
+              Student* s = masterStudent->find(student_id);
+              if (s == NULL){
+                // Student does NOT currently exist
+                cout << "No student currently exists with that id number. Please try again." << endl;
+                break;
+              }
+
+              // Remove student's id from advisors list before deletion
+              Faculty* f = masterFaculty->find(s->getAdvisor());
+              f->removeAdvisee(student_id);
+
+              // If we made it here, then we can delete the student from the tree
+              masterStudent->deleteNode(s);
+              cout << "Student with id " << student_id << " has been deleted." << endl;
+
+              // Update stack for rollback
+              dbe->stackOfRemoves->push(s);
+              dbe->lastMoveWasAdd = false;
+
               break;
-      case 9:
-              cout << "case 9" << endl;
+      }
+      case 9: // add a faculty member
+      {
+              cin.ignore(); // need to catch the last input's newline char so our input will work here
+
+              // declare variables
+              string name, level, department;
+              int id, advisee;
+
+              // Gathers name and level
+              cout << "Please input the new faculty member's full name: " << endl;
+              getline(cin, name);
+              cout << "Please input the new faculty member's level: " << endl;
+              getline(cin, level);
+              // Ask user if they want to pick an id number or not
+              string str_id_choice;
+              int id_choice = 0;
+              while(id_choice != 1 && id_choice != 2){
+                cout << "Would you like to \n1) Choose a faculty id\n2) Generate a random faculty id" << endl;
+                getline(cin, str_id_choice);
+                try{
+                  id_choice = stoi(str_id_choice);
+                }
+                catch(invalid_argument e){}
+
+              }
+              // Lets the user choose the id number
+              string str_id;
+              if (id_choice == 1){
+                cout << "Please input an id for the new faculty member: " << endl;
+                getline(cin, str_id);
+                // Try catch block punishes the user for entering something that isnt a number (or too large to be an integer)
+                try{
+                  id = stoi(str_id);
+                }
+                catch (invalid_argument e){
+                  cout << "Invalid input given. Please try again." << endl;
+                  break;
+                }
+                catch (out_of_range e){
+                  cout << "Your input is too large. Please try again." << endl;
+                  break;
+                }
+
+              }
+              else{ // id_choice == 2 --> randomly generate
+                id = 42069;
+              }
+
+              // Gathers department
+              cout << "Please input the new faculty member's department" << endl;
+              getline(cin, department);
+
+
+              // Double check information for user
+              cout << "Does this information look right? (y/n)" << endl;
+              string good2go;
+              cout << "Name: " << name << endl;
+              cout << "Level: " << level << endl;
+              cout << "ID: " << id << endl;
+              cout << "Department: " << department << endl;
+              getline(cin, good2go);
+
+              // Ensures valid input
+              while (good2go != "y" && good2go != "n"){
+                cout << "Please input a valid value: \'y\' or \'n\'" << endl;
+                getline(cin, good2go);
+              }
+
+              // Good to go. Make new student and insert into tree
+              if (good2go == "y"){
+                Faculty* f = new Faculty(name, level, id, department);
+                masterFaculty->insert(f);
+
+                // Add this student to stack of adds
+                dbe->stackOfAdds->push(f);
+                dbe->lastMoveWasAdd = true;
+
+              }
+              // information is wrong
+              else{
+                cout << "Please come back and re-input your values..." << endl;
+                break;
+              }
+
               break;
+      }
       case 10:
               cout << "case 10" << endl;
               break;
@@ -425,7 +552,11 @@ int main(int argc, char** argv){
               }
 
               // Actual rollback to implemented right here
-
+              if (dbe->lastMoveWasAdd == true){
+                // Last move was an add --> remove the recently added node
+                Person* p = dbe->stackOfAdds->pop();
+                //cout << p->getDepartment() << endl;
+              }
 
 
               break;
@@ -447,6 +578,7 @@ int main(int argc, char** argv){
               // delete trees before closing out of program
               delete masterFaculty;
               delete masterStudent;
+              delete dbe;
 
               return 0;
               break;
