@@ -609,8 +609,44 @@ int main(int argc, char** argv){
 
               break;
       }
-      case 10:
-              cout << "case 10" << endl;
+      case 10: //  delete a faculty member given the id
+      {
+              cin.ignore(); // need to catch the last input's newline char so our input will work here
+
+              string str_id;
+              int faculty_id;
+              cout << "Please input the id of the faculty member you want to delete: " << endl;
+              getline(cin, str_id);
+              // Try catch block punishes the user for entering something that isnt a number (or too large to be an integer)
+              try{
+                faculty_id = stoi(str_id);
+              }
+              catch (invalid_argument e){
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e){
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+
+              // Check if faculty member exists in file
+              Faculty* f = masterFaculty->find(faculty_id);
+              if (f == NULL){
+                // Student does NOT currently exist
+                cout << "No faculty member currently exists with that id number. Please try again." << endl;
+                break;
+              }
+
+              // Go through advisee list and assign each student a new advisor
+              
+
+              // If we made it here, then we can delete the student from the tree
+              masterFaculty->deleteNode(f);
+              cout << "Faculty member with id " << faculty_id << " has been deleted." << endl;
+
+
+      }
               break;
       case 11: //change advisor given student's id and the new faculty id
               cin.ignore(); //you right
