@@ -215,6 +215,7 @@ int main(int argc, char** argv){
     //get user input
     cin >> userInput;
     //switch statement for different operations
+    int sizeOfList;
     switch (userInput)
     {
       case 1:
@@ -253,10 +254,27 @@ int main(int argc, char** argv){
       case 6: //print all names of facutlies advisees given faculty ID #
               cout << "Enter the faculty's ID#" << endl;
               cin >> lookId;
-              //need to get linked list and then use find() method on each value given to display names of students
+              sizeOfList = masterFaculty->find(lookId)->getList()->getSize();
+              //check if list has anyone in it
+              cout << "Advisees: " << endl;
+              if(sizeOfList != 0)
+              {
+                int tempId;
+                //for the size of the list, print out the name of every student
+                for(int i = 0; i < sizeOfList; ++i)
+                {
+                  tempId = masterFaculty->find(lookId)->getList()->removeFront();
+                  //have integer, time to use find method on that id number
+                  cout << masterStudent->find(tempId)->getName() << "   ";
+                  //insert the student id into the back of the list
+                  masterFaculty->find(lookId)->getList()->insertBack(tempId);
+                }
+                cout << "\n" << endl;
+              }
               break;
 
-      case 7: //everytime you create a student make sure you add them to the advisors list of advisees
+      case 7:
+              //everytime you create a student make sure you add them to the advisors list of advisees
               break;
 
       case 8:
@@ -265,9 +283,9 @@ int main(int argc, char** argv){
               break;
       case 10:
               break;
-      case 11:
+      case 11: //change advisor given student's id and the new faculty id
               break;
-      case 12:
+      case 12: //remove student from faculty's linked list given respective ids
               break;
 
       case 13:
