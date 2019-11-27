@@ -246,7 +246,7 @@ int BST<T>::recSearch(TreeNode<T>* node, T elem, TreeNode<T>* correctNode){
     cout << "node->obj= " << node->obj << endl;
     cout << "elem= " << elem << endl;
 
-
+    /*
     // If the elem matches the obj of our current node, return that node
     if (node->obj == elem){
       cout << "MADE IT!!!" << endl;
@@ -256,11 +256,24 @@ int BST<T>::recSearch(TreeNode<T>* node, T elem, TreeNode<T>* correctNode){
       correctNode = node;
       return correctNode->key;
     }
+    */
 
-    cout << "running left" << endl;
-    recSearch(node->left, elem, correctNode);
-    cout << "running right" << endl;
-    recSearch(node->right, elem, correctNode);
+    if (*elem < *node->obj){
+      cout << "running left" << endl;
+      recSearch(node->left, elem, correctNode);
+    }
+    else if (*elem > *node->obj){
+      cout << "running right" << endl;
+      recSearch(node->right, elem, correctNode);
+    }
+    else{
+      cout << "MADE IT!!!" << endl;
+      cout << "correct node pointer= " << node << endl;
+      cout << "correct obj pointer= " << node->obj << endl;
+      cout << "correct key= " << node->key << endl;
+      correctNode = node;
+      return correctNode->key;
+    }
 
   }
 
