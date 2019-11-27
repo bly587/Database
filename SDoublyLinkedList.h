@@ -184,7 +184,7 @@ SListNode<T>* SDoublyLinkedList<T>::remove(T elem)
   curr->next = NULL;
   curr->prev = NULL;
   size--;
-
+  
   return curr;
 }
 
@@ -208,6 +208,11 @@ void SDoublyLinkedList<T>::printList()
   while(curr != NULL)
   {
     cout << curr->data << endl;
-    curr = curr->next;
+    if (curr == back){
+      break;
+    }
+    else{
+      curr = curr->next;
+    }
   }
 }

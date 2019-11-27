@@ -106,40 +106,40 @@ TreeNode<T>* BST<T>::getMin(){
 
 template <class T>
 void BST<T>::insert(T elem){
-  cout << "inserting    " << *elem << endl;
+  // cout << "inserting    " << *elem << endl;
   // check if value exists in tree already before proceding
   // every key is unique, so if it is already in the tree, we cannot insert
 
   TreeNode<T> *node = new TreeNode<T>(elem, elem->getId());
-  cout << "new node= " << node->getKey() << endl;
+  // cout << "new node= " << node->getKey() << endl;
   //cout << "new node= " << **node->key << endl; // Bro this changes after the first cout like how the heck
   // int value = node->key; do i need this
 
   if (root == NULL){ // empty tree
     root = node;
-    cout << "first node entered as root" << endl;
-    cout << "root= "<< *node->getObject() << endl; //not printing correct value
+    // cout << "first node entered as root" << endl;
+    // cout << "root= "<< *node->getObject() << endl; //not printing correct value
   }
   else{
     // tree is not empty
     // let's find the insertion point
     TreeNode<T> *current = root;
     TreeNode<T> *parent = NULL;
-    cout << "current/root= "<< *root->getObject() << endl; //not printing correct value
+    // cout << "current/root= "<< *root->getObject() << endl; //not printing correct value
 
     int deez = 0;
     int nuts = 0;
     // traverse tree
     while(deez == nuts){
       parent = current;
-      cout << "about to compare..." << endl;
-      cout << "Elem ID: " << elem->getId() << endl;
-      cout << "Curr ID: " << current->getKey() << endl;
+      // cout << "about to compare..." << endl;
+      // cout << "Elem ID: " << elem->getId() << endl;
+      // cout << "Curr ID: " << current->getKey() << endl;
       // Compare objects --> for assignment_5, we make comparison operators in the object class itself
       if (elem->getId() < current->getKey()){
         // go left
         current = current->left;
-        cout << "goin left" << endl;
+        // cout << "goin left" << endl;
         if (current == NULL){ // found insertion point
           parent->left = node;
           break;
@@ -148,7 +148,7 @@ void BST<T>::insert(T elem){
       else{
         // go right
         current = current->right;
-        cout << "goin right" << endl;
+        // cout << "goin right" << endl;
         if (current == NULL){ // found the insertion point
           parent->right = node;
           break;
@@ -207,70 +207,34 @@ T BST<T>::find(int num)
 // this function may change to return a TreeNode<T>* for assignment_5
 template <class T>
 int BST<T>::search(T elem){
-  /*
-  // if the tree is empty
-  if (root == NULL){
-    return NULL;
-  }
-
-  // made it here? the tree is for shizzle not empty
-  TreeNode<T> *current = root;
-  while (current != elem){
-    if (elem < current){
-      current = current->left;
-    }
-    else{
-      current = current->right;
-    }
-
-    if (current == NULL){ //  value not in tree
-      cout << "could not find element in tree" << endl;
-      return NULL;
-    }
-  }
-  return current;
-  */
   int t = recSearch(this->root, elem, NULL);
-  cout << "t=" << t << endl;
   return t;
 }
 
 template <class T>
 int BST<T>::recSearch(TreeNode<T>* node, T elem, TreeNode<T>* correctNode){
   if (node == NULL){
-    cout << "node is null. returning: " << correctNode << endl;
     return 0;
   }
   else{
-    cout << "recursion: " << node->key << endl;
-    cout << "node->obj= " << node->obj << endl;
-    cout << "elem= " << elem << endl;
+    // cout << "recursion: " << node->key << endl;
+    // cout << "node->obj= " << node->obj << endl;
+    // cout << "elem= " << elem << endl;
 
-    /*
-    // If the elem matches the obj of our current node, return that node
-    if (node->obj == elem){
-      cout << "MADE IT!!!" << endl;
-      cout << "correct node pointer= " << node << endl;
-      cout << "correct obj pointer= " << node->obj << endl;
-      cout << "correct key= " << node->key << endl;
-      correctNode = node;
-      return correctNode->key;
-    }
-    */
 
     if (*elem < *node->obj){
-      cout << "running left" << endl;
+      //cout << "running left" << endl;
       recSearch(node->left, elem, correctNode);
     }
     else if (*elem > *node->obj){
-      cout << "running right" << endl;
+      //cout << "running right" << endl;
       recSearch(node->right, elem, correctNode);
     }
     else{
-      cout << "MADE IT!!!" << endl;
-      cout << "correct node pointer= " << node << endl;
-      cout << "correct obj pointer= " << node->obj << endl;
-      cout << "correct key= " << node->key << endl;
+      // cout << "MADE IT!!!" << endl;
+      // cout << "correct node pointer= " << node << endl;
+      // cout << "correct obj pointer= " << node->obj << endl;
+      // cout << "correct key= " << node->key << endl;
       correctNode = node;
       return correctNode->key;
     }
@@ -293,7 +257,7 @@ bool BST<T>::deleteNode(T elem){
   //TreeNode<T> *nodeToFind = search(elem);
   //cout << nodeToFind << endl;
   int key = search(elem);
-  cout << "here? key= " << key << endl;
+  cout << "looking for key= " << key << endl;
 
   // let's attempt to find the node to be deleted
   while (current->key != key)
@@ -379,7 +343,7 @@ bool BST<T>::deleteNode(T elem){
 
     successor->left = current->left;
   }
-  cout << "node successfully deleted?" << endl;
+  cout << "node successfully deleted!" << endl;
   return true;
 }
 

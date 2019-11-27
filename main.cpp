@@ -29,7 +29,6 @@ using namespace std;
 
 
 int main(int argc, char** argv){
-  cout << "test main" << endl;
 
   // do
   // the
@@ -144,20 +143,18 @@ int main(int argc, char** argv){
   SpecialBST<Faculty*>* masterFaculty = new SpecialBST<Faculty*>();
 
   if (facultyTable.is_open() && studentTable.is_open()){
-    cout << "\n\n\n\n\n\n\nThe serialized files exist!!!" << endl;
 
     // deserialize students
 
     while(true){
       Student* s = new Student(studentTable);
-      cout << s->getName() << endl;
 
       if (s->getName() == "done"){ // Breaks out of loop if last node was just filled
         break;
       }
       else{
         // add student to tree
-        cout << "inserting into tree: " << s->getId() << endl;
+        // cout << "inserting into tree: " << s->getId() << endl;
         masterStudent->insert(s);
       }
     }
@@ -172,7 +169,7 @@ int main(int argc, char** argv){
       }
       else{
         // add faculty to tree
-        cout << "inserting into tree: " << f->getId() << endl;
+        // cout << "inserting into tree: " << f->getId() << endl;
         masterFaculty->insert(f);
       }
     }
@@ -509,6 +506,11 @@ int main(int argc, char** argv){
                 cout << "No student currently exists with that id number. Please try again." << endl;
                 break;
               }
+              // Makes sure the member to be deleted is not the last node in the tree
+              if (s == masterStudent->getRoot()->obj && masterStudent->getRoot()->left == NULL && masterStudent->getRoot()->right == NULL){
+                cout << "Student to be deleted is the only member remaining in the database. Cannot delete." << endl;
+                break;
+              }
 
               // Remove student's id from advisors list before deletion
               Faculty* f = masterFaculty->find(s->getAdvisor());
@@ -640,14 +642,36 @@ int main(int argc, char** argv){
                 cout << "No faculty member currently exists with that id number. Please try again." << endl;
                 break;
               }
-
-              // Go through advisee list and assign each student a new advisor
-              
+              // Makes sure the member to be deleted is not the last node in the tree
+              if (f == masterFaculty->getRoot()->obj && masterFaculty->getRoot()->left == NULL && masterFaculty->getRoot()->right == NULL){
+                cout << "Faculty member to be deleted is the only member remaining in the database. Cannot delete." << endl;
+                break;
+              }
 
               // If we made it here, then we can delete the student from the tree
               masterFaculty->deleteNode(f);
-              cout << "Faculty member with id " << faculty_id << " has been deleted." << endl;
 
+              // Grab root of masterFaculty for replacement faculty member/advisor
+              Faculty* replacementFacMember = masterFaculty->getRoot()->obj;
+              cout << "root = " << replacementFacMember->getId() << endl;
+              // Go through advisee list and assign each student a new advisor
+              int *student_ids;
+              student_ids = f->replaceAdvisor(replacementFacMember);
+              int arraySize = student_ids[0];
+              // Traverse through list of student ids
+              for (int i = 1; i < arraySize+1; ++i){
+                Student* s = masterStudent->find(student_ids[i]);
+                // Sets student's advisor to replacement and adds student to replacement's advisee list
+                s->setAdvisor(replacementFacMember->getId());
+                replacementFacMember->addAdvisee(student_ids[i]);
+              }
+
+              // Add this faculty member to the stack of removes
+              dbe->stackOfRemovesF->push(f);
+              dbe->lastMoveWasS = false;
+              dbe->lastMoveWasAdd = false;
+
+              cout << "Faculty member with id " << faculty_id << " has been deleted." << endl;
 
       }
               break;

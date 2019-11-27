@@ -17,6 +17,8 @@ class Faculty : public Person{
     Faculty(string name, string level, int id, string department, int student);
     // deserialize constructor
     Faculty(istream& i);
+    // destructor
+    ~Faculty();
     //getters
     string getDepartment();
     SDoublyLinkedList<int>* getList();
@@ -28,6 +30,9 @@ class Faculty : public Person{
     void print();
     // serialize
     ostream& serialize(ostream& o);
+
+    // This function is used when deleting a faculty member
+    int* replaceAdvisor(Faculty* f);
 
 };
 //constructors
@@ -47,6 +52,11 @@ Faculty::Faculty(string name, string level, int id, string department, int stude
   m_department = department;
   m_advisees = new SDoublyLinkedList<int>;
   m_advisees->insertFront(student);
+}
+
+// destructor
+Faculty::~Faculty(){
+  delete m_advisees;
 }
 
 SDoublyLinkedList<int>* Faculty::getList()
@@ -103,6 +113,7 @@ void Faculty::addAdvisee(int id)
 
 void Faculty::removeAdvisee(int id)
 {
+  cout << "removing from m_advisees: " << id << endl;
   m_advisees->remove(id);
 }
 
@@ -122,4 +133,17 @@ ostream& Faculty::serialize(ostream& o){
   o << endl;
 
   return o;
+}
+
+int* Faculty::replaceAdvisor(Faculty* f){
+  // Iterate through list of advisees
+  int linkedListSize = m_advisees->getSize();
+  int student_id;
+  int *ids = new int[linkedListSize];
+  ids[0] = linkedListSize;
+  for (int i = 1; i < linkedListSize+1; ++i){
+    student_id = m_advisees->removeFront(); // Remove student from list
+    ids[i] = student_id;
+  }
+  return ids;
 }
