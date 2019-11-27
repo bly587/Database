@@ -144,6 +144,8 @@ int* Faculty::replaceAdvisor(Faculty* f){
   for (int i = 1; i < linkedListSize+1; ++i){
     student_id = m_advisees->removeFront(); // Remove student from list
     ids[i] = student_id;
+    //add back to list for rollback
+    m_advisees->insertBack(student_id);
   }
   return ids;
 }

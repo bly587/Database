@@ -648,7 +648,7 @@ int main(int argc, char** argv){
                 break;
               }
 
-              // If we made it here, then we can delete the student from the tree
+              // If we made it here, then we can delete the faculty from the tree
               masterFaculty->deleteNode(f);
 
               // Grab root of masterFaculty for replacement faculty member/advisor
@@ -716,13 +716,16 @@ int main(int argc, char** argv){
               }
               //check if student has an advisor and if they are deleted from their list
               oldAdvisor = masterStudent->find(lookId)->getAdvisor();
-
               if(oldAdvisor != newFacId)
               {
-                //delete student from old faculty advisor's list
-                if(masterFaculty->find(oldAdvisor)->getList()->find(lookId) == true)
+                //check if student even has an advisor. Advisor id will = 0 if there is no advisor assigned
+                if(oldAdvisor != 0)
                 {
-                  masterFaculty->find(oldAdvisor)->getList()->remove(lookId);
+                  //delete student from old faculty advisor's list
+                  if(masterFaculty->find(oldAdvisor)->getList()->find(lookId) == true)
+                  {
+                    masterFaculty->find(oldAdvisor)->getList()->remove(lookId);
+                  }
                 }
                 //change advisor in student class
                 masterStudent->find(lookId)->setAdvisor(newFacId);
@@ -790,8 +793,6 @@ int main(int argc, char** argv){
               break;
 
       case 13:
-              //make sure stack has appropriate stuff tomorrow
-
               // Actual rollback to implemented right here
               if (dbe->lastMoveWasAdd == true)
               {
@@ -807,18 +808,24 @@ int main(int argc, char** argv){
                   f->removeAdvisee(student_id);
                   // If we made it here, then we can delete the student from the tree
                   masterStudent->deleteNode(remove_s);
-                  cout << "Succesfully rolled back" << endl;
+                  cout << "Succesfully rolled back. (Deleted student)" << endl;
                 }
-                //needs more work
                 else //last move was a faculty
                 {
                   //remove faculty
                   Faculty* remove_f = dbe->stackOfAddF->pop();
                   //Remove faculty id from student before deletion
-
-                  Student* s = masterStudent->find(remove_f->getId());
+                  sizeOfList = remove_f->getList()->getSize();
+                  // Traverse through list of student ids
+                  for (int i = 0; i < sizeOfList; ++i){
+                    //get student id
+                    int idToDelete = remove_f->getList()->removeFront();
+                    //find student and set their advisor to 0
+                    masterStudent->find(idToDelete)->setAdvisor(0);
+                  }
+                  masterFaculty->deleteNode(remove_f);
+                  cout << "Succesfully rolled back. (Deleted faculty)" << endl;
                 }
-                //cout << p->getDepartment() << endl;
               }
               else //must've deleted a node so now add the node back
               {
@@ -827,10 +834,47 @@ int main(int argc, char** argv){
                 {
                   //add the student back to the masterStudent
                   Student* add_s = dbe->stackOfRemovesS->pop();
+                  int add_student_id = add_s->getId();
+                  //first check if they have an advisor
+                  int add_advisor_id = add_s->getAdvisor();
+                  // cout << "Advisor getting student back is: " << add_advisor_id << endl;
+                  if(add_advisor_id != 0)
+                  {
+                    // cout << "We are in the if statement" << endl;
+                    //everytime you create a student, make sure you add them to the advisors list of advisees
+                    Faculty* f = masterFaculty->find(add_advisor_id);
+                    f->addAdvisee(add_student_id);
+                    // cout << "Added back to list" << endl;
+                  }
+                  cout << "successfully rolled back. (Added student)" << endl;
+                  //once added to list or not then add them back to the list
+                  masterStudent->insert(add_s);
+
                 }
                 else //last move was a faculty
                 {
                   //add the faculty back to the masterFaculty
+                  Faculty* f = dbe->stackOfRemovesF->pop();
+                  //get id of f
+                  int facId_1 = f->getId();
+                  //find list of advisees
+                  int sizeOfList_1 = f->getList()->getSize();
+                  cout << "Anything in this list?: " << sizeOfList_1 <<endl;
+                  for(int i = 0; i < sizeOfList_1; ++i)
+                  {
+                    cout << "Running for loop" << endl;
+                    int studId = f->getList()->removeFront();
+                    cout << "Got student ID" << endl;
+                    //locate student using find method and change their advisor back
+                    cout << "Changing advisor back" << endl;
+                    masterStudent->find(studId)->setAdvisor(facId_1);
+                    //insert student back into the list so we dont lose them
+                    f->getList()->insertBack(studId);
+                  }
+                  cout << "successfully rolled back. (Added faculty)" << endl;
+                  //add faculty back to masterFaculty
+                  masterFaculty->insert(f);
+                  //iterate through list
                 }
               }
 
