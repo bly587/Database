@@ -1,13 +1,13 @@
 #include <iostream>
 #include "Student.h"
-#include "SLinkedList.h"
+#include "SDoublyLinkedList.h"
 
 using namespace std;
 
 class Faculty : public Person{
   public:
     string m_department;
-    SLinkedList<int> *m_advisees;
+    SDoublyLinkedList<int> *m_advisees;
 
     //constructor
     Faculty(string name, string level, int id);
@@ -17,6 +17,7 @@ class Faculty : public Person{
     Faculty(istream& i);
     //getters
     string getDepartment();
+    SDoublyLinkedList<int>* getList();
     //setters
     void setDepartment(string depo);
     void addAdvisee(int id);
@@ -30,14 +31,19 @@ class Faculty : public Person{
 Faculty::Faculty(string name, string level, int id) : Person(name, level, id)
 {
   m_department = "";
-  m_advisees = new SLinkedList<int>;
+  m_advisees = new SDoublyLinkedList<int>;
 }
 
 Faculty::Faculty(string name, string level, int id, string department, int student) : Person(name, level, id)
 {
   m_department = department;
-  m_advisees = new SLinkedList<int>;
+  m_advisees = new SDoublyLinkedList<int>;
   m_advisees->insertFront(student);
+}
+
+SDoublyLinkedList<int>* Faculty::getList()
+{
+  return m_advisees;
 }
 
 Faculty::Faculty(istream& i) : Person(i){
@@ -47,7 +53,7 @@ Faculty::Faculty(istream& i) : Person(i){
   int size; // Represents the amount of advisees an advisor has
   i >> size;
   // Initialize linked-list
-  m_advisees = new SLinkedList<int>;
+  m_advisees = new SDoublyLinkedList<int>;
   // Grab every student id based on size given in file
   int id;
   for (int j = 0; j < size; ++j){
@@ -79,7 +85,7 @@ void Faculty::print()
   cout << "Department: " << getDepartment() << endl;
   cout << "List of Students: ";
   m_advisees->printList();
-  cout << "\n";
+  cout << "\n" << endl;;
 }
 
 void Faculty::addAdvisee(int id)
