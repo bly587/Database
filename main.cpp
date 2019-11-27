@@ -162,7 +162,6 @@ int main(int argc, char** argv){
       }
     }
 
-    // ----------------------------------------------------------------------
     // deserialize faculty members
 
     while(true){
@@ -187,9 +186,10 @@ int main(int argc, char** argv){
     cout << "files don't exist; starting with empty trees" << endl;
   }
 
-  // Create outfiles
+  // Declare variables
   ofstream faculty_out;
-  ofstream student_out;
+  ofstream student_out; // Create outfiles early because they cannot be declared in the switch/case
+  string rollItBack;
 
   // ---------------------------------------------------------------
   // Main Menu time
@@ -232,21 +232,22 @@ int main(int argc, char** argv){
               int lookId;
               cout << "Enter the student ID# of the student you'd like to look up." << endl;
               cin >> lookId;
-              // stuTree->find(lookId)->printStudent();
+              masterStudent->find(lookId)->print();
               break;
 
       case 4:
               //print information of faculty given ID #
               cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
               cin >> lookId;
-              // facTree->find(lookId)->printFaculty();
+              masterFaculty->find(lookId)->print();
               break;
 
       case 5: //print info of student's faculty advisor given student id
               cout << "Enter the student's ID#" << endl;
               cin >> lookId;
-              // lookId = stuTree->find(lookId)->getAdvisor();
-              // cout << "Advisor's name is: " << facTree->find(lookId)->getName() << endl;
+              lookId = masterStudent->find(lookId)->getAdvisor();
+              cout << "Here is the information of this student's advisor:" << endl;
+              masterFaculty->find(lookId)->print();
               break;
 
       case 6: //print all names of facutlies advisees given faculty ID #
@@ -258,6 +259,25 @@ int main(int argc, char** argv){
       case 7: //everytime you create a student make sure you add them to the advisors list of advisees
               break;
 
+      case 8:
+              break;
+      case 9:
+              break;
+      case 10:
+              break;
+      case 11:
+              break;
+      case 12:
+              break;
+
+      case 13:
+              cout << "Hey what's up we about to roll it BACK" << endl;
+              rollItBack = "roll it back. ";
+              for (int i = 0; i < 420; ++i){
+                cout << rollItBack << endl;
+                rollItBack += "roll it back. ";
+              }
+              break;
 
       case 14:
               // Write to files
