@@ -46,5 +46,5 @@ T TreeNode<T>::getObject()
 
 template <class T>
 TreeNode<T>::~TreeNode(){
-  //delete obj;
+  delete obj;
 }

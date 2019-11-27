@@ -273,19 +273,147 @@ int main(int argc, char** argv){
               }
               break;
 
-      case 7:
-              //everytime you create a student make sure you add them to the advisors list of advisees
-              break;
+      case 7: // add student
+      {
 
+              cin.ignore(); // need to catch the last input's newline char so our input will work here
+
+              // declare variables
+              string name, level, major;
+              int id, advisor;
+              double gpa;
+
+              // Gathers name and level
+              cout << "Please input the new student's full name: " << endl;
+              getline(cin, name);
+              cout << "Please input the new student's level: " << endl;
+              getline(cin, level);
+              // Ask user if they want to pick an id number or not
+              string str_id_choice;
+              int id_choice = 0;
+              while(id_choice != 1 && id_choice != 2){
+                cout << "Would you like to \n1) Choose a student id\n2) Generate a random student id" << endl;
+                getline(cin, str_id_choice);
+                try{
+                  id_choice = stoi(str_id_choice);
+                }
+                catch(invalid_argument e){}
+
+              }
+              // Lets the user choose the id number
+              string str_id;
+              if (id_choice == 1){
+                cout << "Please input an id for the new student: " << endl;
+                getline(cin, str_id);
+                // Try catch block punishes the user for entering something that isnt a number (or too large to be an integer)
+                try{
+                  id = stoi(str_id);
+                }
+                catch (invalid_argument e){
+                  cout << "Invalid input given. Please try again." << endl;
+                  break;
+                }
+                catch (out_of_range e){
+                  cout << "Your input is too large. Please try again." << endl;
+                  break;
+                }
+
+              }
+              else{ // id_choice == 2
+                id = 42069;
+              }
+
+              // Gathers major
+              cout << "Please input the new student's major" << endl;
+              getline(cin, major);
+              // Gathers GPA
+              string str_gpa;
+              cout << "Please input the new student's GPA (decimal value): " << endl;
+              getline(cin, str_gpa);
+              // Try catch block punishes the user for entering something that isnt a number
+              try{
+                gpa = stod(str_gpa);
+              }
+              catch (invalid_argument e){
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+
+              // Gathers faculty advisor
+              string str_advisor;
+              cout << "Please input the id number of the advisor for this new student: " << endl;
+              getline(cin, str_advisor);
+              // Try catch block punishes the user for entering something that isnt a number (or too large to be an integer)
+              try{
+                advisor = stoi(str_advisor);
+              }
+              catch (invalid_argument e){
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e){
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+
+              // Ensures the given id number is valid
+              if (masterFaculty->find(advisor) == NULL){
+                cout << "No faculty member exists with that id. Please try again." << endl;
+                break;
+              }
+
+
+              // Double check information for user
+              cout << "Does this information look right? (y/n)" << endl;
+              string good2go;
+              cout << "Name: " << name << endl;
+              cout << "Level: " << level << endl;
+              cout << "ID: " << id << endl;
+              cout << "Major: " << major << endl;
+              cout << "GPA: " << gpa << endl;
+              cout << "Advisor ID: " << advisor << endl;
+              getline(cin, good2go);
+
+              // Ensures valid input
+              while (good2go != "y" && good2go != "n"){
+                cout << "Please input a valid value: \'y\' or \'n\'" << endl;
+                getline(cin, good2go);
+              }
+
+              // Good to go. Make new student and insert into tree
+              if (good2go == "y"){
+                Student* s = new Student(name, level, id, major, gpa, advisor);
+                masterStudent->insert(s);
+
+                //everytime you create a student, make sure you add them to the advisors list of advisees
+                Faculty* f = masterFaculty->find(advisor);
+                f->addAdvisee(id);
+
+                // Add this student to stack of adds
+
+              }
+              // information is wrong
+              else{
+                cout << "Please come back and re-input your values..." << endl;
+                break;
+              }
+
+              break;
+      }
       case 8:
+              cout << "case 8" << endl;
               break;
       case 9:
+              cout << "case 9" << endl;
               break;
       case 10:
+              cout << "case 10" << endl;
               break;
       case 11: //change advisor given student's id and the new faculty id
+              cout << "case 11" << endl;
               break;
       case 12: //remove student from faculty's linked list given respective ids
+              cout << "case 12" << endl;
               break;
 
       case 13:
@@ -315,6 +443,11 @@ int main(int argc, char** argv){
               student_out.close();
 
               // that was easy (it wasn't, but it sure looks easy)
+
+              // delete trees before closing out of program
+              delete masterFaculty;
+              delete masterStudent;
+
               return 0;
               break;
 

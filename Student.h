@@ -9,7 +9,8 @@ class Student : public Person{
     double m_gpa;
     int m_advisor;
 
-
+    // empty constructor
+    Student();
     //constructor
     Student(string name, string level, int id);
     //overload
@@ -31,6 +32,14 @@ class Student : public Person{
     ostream& serialize(ostream& o);
 };
 //constructors
+Student::Student() : Person(){
+  string name;
+  cout << "Please input the new student's full name" << endl;
+  getline(cin, name);
+  //cin >> name;
+  cout << "name: " << name << endl;
+}
+
 Student::Student(string name, string level, int id) : Person(name, level, id)
 {
   m_major = "";

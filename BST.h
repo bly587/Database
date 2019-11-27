@@ -39,6 +39,7 @@ BST<T>::BST(){
 template <class T>
 BST<T>::~BST(){
   recDelete(root);
+  cout << "Tree deleted" << endl;
 }
 
 // template <class T>
@@ -93,7 +94,7 @@ void BST<T>::recPrint(TreeNode<T>* node){
   if (node == NULL){
     return;
   }
-  
+
   recPrint(node->left);
   node->obj->print();
   recPrint(node->right);
@@ -182,41 +183,49 @@ void BST<T>::insert(T elem){
   }
 }
 
+// Finds a node given an id, and returns the object in the node if it found (else returns NULL)
 template <class T>
 T BST<T>::find(int num)
 {
+
+  // If the tree is empty
   if(root == NULL)
   {
     cout << "BST Empty!" << endl;
     return NULL;
   }
+  // Declare variables
   TreeNode<T>* current = root;
   int temp = current->getKey();
-  //cout << "Entering loop" << endl;
-  while (temp!= num)
+  // cout << "Entering loop" << endl;
+  // Traverse tree
+  while (temp != num)
   {
-  //  cout << "Temp: " << temp << endl;
-    //cout << "Num: " << num << endl;
+    // cout << "Temp: " << temp << endl;
+    // cout << "Num: " << num << endl;
+
     if (num < temp)
     {
-      //cout << "going left" << endl;
+      // cout << "going left" << endl;
       current = current->left;
     }
-    else if(num > temp)
+    else if (num > temp)
     {
-      //cout << "current key: " << current->getKey() << endl;
-      //cout << "going right" << endl;
+      // cout << "going right" << endl;
       current = current->right;
-    //  cout << "current key: " << current->getKey() << endl;
     }
-    else if(current == NULL)
+
+    // if true, node is not in tree
+    if (current == NULL)
     {
+      // cout << "Couldn't find id/key in tree :(" << endl;
       return NULL;
     }
+    // Update temp variable
     temp = current->getKey();
-    //cout << "The number of new root: " << temp << endl;
+    // cout << "The number of new root: " << temp << endl;
   }
-  //exit loop with correct object
+  //exit loop with correct object (if we made it here, we found the node)
   return current->getObject();
 }
 // this function may change to return a TreeNode<T>* for assignment_5

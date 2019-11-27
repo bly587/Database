@@ -5,6 +5,8 @@ using namespace std;
 
 class DBEdits{
   public:
+    bool lastMoveWasAdd;
+
     GenStack<Person*>* stackOfAdds;
     GenStack<Person*>* stackOfRemoves;
 
@@ -12,3 +14,13 @@ class DBEdits{
     ~DBEdits();
 
 };
+
+DBEdits::DBEdits(){
+  stackOfAdds = new GenStack<Person*>();
+  stackOfRemoves = new GenStack<Person*>();
+}
+
+DBEdits::~DBEdits(){
+  delete stackOfAdds;
+  delete stackOfRemoves;
+}
