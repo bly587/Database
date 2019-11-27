@@ -439,7 +439,25 @@ int main(int argc, char** argv){
               cout << "Set new fac id for " << lookId << " to " << masterStudent->find(lookId)->getAdvisor() << endl;
               break;
       case 12: //remove student from faculty's linked list given respective ids
-              cout << "case 12" << endl;
+              cin.ignore(); //you right
+              int facId;
+              cout << "Enter the Student's ID# you'd like to have removed" << endl;
+              cin >> lookId;
+              cout << "Enter the Faculty's ID#" << endl;
+              cin >> facId;
+              //check to make sure the student's Id is in the respective faculty's linkedlist
+              if(masterFaculty->find(facId)->getList()->find(lookId) == true)
+              {
+                //deleting student from faculty's linked list
+                masterFaculty->find(facId)->getList()->remove(lookId);
+                //update student to have no advisor
+                masterStudent->find(lookId)->setAdvisor(0); //0 refers to no faculty ID
+              }
+              else
+              {
+                cout << "Um maybe wrong faculty Id? Cuz that's not his advisor..." << endl;
+                break;
+              }
               break;
 
       case 13:
