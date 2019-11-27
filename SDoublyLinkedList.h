@@ -78,12 +78,12 @@ bool SDoublyLinkedList<T>::find(T elem){
   {
     if(curr->data == elem)
     {
-      cout << "Found him!" << endl;
+      //cout << "Found him!" << endl;
       return true;
     }
     curr = curr->next;
   }
-  cout << "Returning false" << endl;
+  //cout << "Returning false" << endl;
   return false;
 }
 

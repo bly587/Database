@@ -419,45 +419,24 @@ int main(int argc, char** argv){
               cin >> newFacId;
               //check if student has an advisor and if they are deleted from their list
               oldAdvisor = masterStudent->find(lookId)->getAdvisor();
-              cout << "The old advisor was: " << oldAdvisor << endl;
-
-              //checking if old faculty holds student in list
-              sizeOfList = masterFaculty->find(oldAdvisor)->getList()->getSize();
-              //check if list has anyone in it
-              cout << "Advisees: " << endl;
-              if(sizeOfList != 0)
-              {
-                int tempId;
-                //for the size of the list, print out the name of every student
-                for(int i = 0; i < sizeOfList; ++i)
-                {
-                  tempId = masterFaculty->find(oldAdvisor)->getList()->removeFront();
-                  //have integer, time to use find method on that id number
-                  cout << masterStudent->find(tempId)->getName() << "   ";
-                  //insert the student id into the back of the list
-                  masterFaculty->find(oldAdvisor)->getList()->insertBack(tempId);
-                }
-                cout << "\n" << endl;
-              }
-
 
               if(oldAdvisor != newFacId)
               {
                 //delete student from old faculty advisor's list
                 if(masterFaculty->find(oldAdvisor)->getList()->find(lookId) == true)
                 {
-                  cout << "Succesfully removed" << endl;
                   masterFaculty->find(oldAdvisor)->getList()->remove(lookId);
                 }
+                //change advisor in student class
+                masterStudent->find(lookId)->setAdvisor(newFacId);
+                //add student to faculty id
+                masterFaculty->find(newFacId)->getList()->insertFront(lookId);
               }
-              //change advisor in student class
-              masterStudent->find(lookId)->setAdvisor(newFacId);
+              else
+              {
+                cout << "Bruh he already his advisor..." << endl;
+              }
               cout << "Set new fac id for " << lookId << " to " << masterStudent->find(lookId)->getAdvisor() << endl;
-              //check if student is
-              //add student to faculty id
-              masterFaculty->find(newFacId)->getList()->insertFront(lookId);
-              //if student already exists in this faculty's list then don't add again duh
-              cout << "case 11" << endl;
               break;
       case 12: //remove student from faculty's linked list given respective ids
               cout << "case 12" << endl;
