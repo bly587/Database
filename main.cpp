@@ -216,6 +216,7 @@ int main(int argc, char** argv){
     cin >> userInput;
     //switch statement for different operations
     int sizeOfList;
+    int oldAdvisor;
     switch (userInput)
     {
       case 1:
@@ -238,7 +239,7 @@ int main(int argc, char** argv){
 
       case 4:
               //print information of faculty given ID #
-              cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
+              cout << "Enter the faculty ID# of the faculty you'd like to look up." << endl;
               cin >> lookId;
               masterFaculty->find(lookId)->print();
               break;
@@ -410,6 +411,52 @@ int main(int argc, char** argv){
               cout << "case 10" << endl;
               break;
       case 11: //change advisor given student's id and the new faculty id
+              cin.ignore(); //you right
+              int newFacId;
+              cout << "Enter the Student's ID#" << endl;
+              cin >> lookId;
+              cout << "Enter the new Faculty's ID#" << endl;
+              cin >> newFacId;
+              //check if student has an advisor and if they are deleted from their list
+              oldAdvisor = masterStudent->find(lookId)->getAdvisor();
+              cout << "The old advisor was: " << oldAdvisor << endl;
+
+              //checking if old faculty holds student in list
+              sizeOfList = masterFaculty->find(oldAdvisor)->getList()->getSize();
+              //check if list has anyone in it
+              cout << "Advisees: " << endl;
+              if(sizeOfList != 0)
+              {
+                int tempId;
+                //for the size of the list, print out the name of every student
+                for(int i = 0; i < sizeOfList; ++i)
+                {
+                  tempId = masterFaculty->find(oldAdvisor)->getList()->removeFront();
+                  //have integer, time to use find method on that id number
+                  cout << masterStudent->find(tempId)->getName() << "   ";
+                  //insert the student id into the back of the list
+                  masterFaculty->find(oldAdvisor)->getList()->insertBack(tempId);
+                }
+                cout << "\n" << endl;
+              }
+
+
+              if(oldAdvisor != newFacId)
+              {
+                //delete student from old faculty advisor's list
+                if(masterFaculty->find(oldAdvisor)->getList()->find(lookId) == true)
+                {
+                  cout << "Succesfully removed" << endl;
+                  masterFaculty->find(oldAdvisor)->getList()->remove(lookId);
+                }
+              }
+              //change advisor in student class
+              masterStudent->find(lookId)->setAdvisor(newFacId);
+              cout << "Set new fac id for " << lookId << " to " << masterStudent->find(lookId)->getAdvisor() << endl;
+              //check if student is
+              //add student to faculty id
+              masterFaculty->find(newFacId)->getList()->insertFront(lookId);
+              //if student already exists in this faculty's list then don't add again duh
               cout << "case 11" << endl;
               break;
       case 12: //remove student from faculty's linked list given respective ids
