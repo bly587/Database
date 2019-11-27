@@ -467,7 +467,8 @@ int main(int argc, char** argv){
                 f->addAdvisee(id);
 
                 // Add this student to stack of adds
-                dbe->stackOfAdds->push(s);
+                dbe->stackOfAddS->push(s);
+                dbe->lastMoveWasS = true;
                 dbe->lastMoveWasAdd = true;
 
               }
@@ -518,7 +519,8 @@ int main(int argc, char** argv){
               cout << "Student with id " << student_id << " has been deleted." << endl;
 
               // Update stack for rollback
-              dbe->stackOfRemoves->push(s);
+              dbe->stackOfRemovesS->push(s);
+              dbe->lastMoveWasS = true;
               dbe->lastMoveWasAdd = false;
 
               break;
@@ -597,7 +599,8 @@ int main(int argc, char** argv){
                 masterFaculty->insert(f);
 
                 // Add this student to stack of adds
-                dbe->stackOfAdds->push(f);
+                dbe->stackOfAddF->push(f);
+                dbe->lastMoveWasS = false;
                 dbe->lastMoveWasAdd = true;
 
               }
@@ -763,18 +766,48 @@ int main(int argc, char** argv){
               break;
 
       case 13:
-              cout << "Hey what's up we about to roll it BACK" << endl;
-              rollItBack = "roll it back. ";
-              for (int i = 0; i < 420; ++i){
-                cout << rollItBack << endl;
-                rollItBack += "roll it back. ";
-              }
+              //make sure stack has appropriate stuff tomorrow
 
               // Actual rollback to implemented right here
-              if (dbe->lastMoveWasAdd == true){
+              if (dbe->lastMoveWasAdd == true)
+              {
                 // Last move was an add --> remove the recently added node
-                Person* p = dbe->stackOfAdds->pop();
+                //now check if it was a student or faculty
+                if(dbe->lastMoveWasS == true)
+                {
+                  //remove student
+                  Student* remove_s = dbe->stackOfAddS->pop();
+                  // Remove student's id from advisors list before deletion
+                  Faculty* f = masterFaculty->find(remove_s->getAdvisor());
+                  int student_id = remove_s->getId();
+                  f->removeAdvisee(student_id);
+                  // If we made it here, then we can delete the student from the tree
+                  masterStudent->deleteNode(remove_s);
+                  cout << "Succesfully rolled back" << endl;
+                }
+                //needs more work
+                else //last move was a faculty
+                {
+                  //remove faculty
+                  Faculty* remove_f = dbe->stackOfAddF->pop();
+                  //Remove faculty id from student before deletion
+
+                  Student* s = masterStudent->find(remove_f->getId());
+                }
                 //cout << p->getDepartment() << endl;
+              }
+              else //must've deleted a node so now add the node back
+              {
+                //now check if it was a student or faculty
+                if(dbe->lastMoveWasS == true)
+                {
+                  //add the student back to the masterStudent
+                  Student* add_s = dbe->stackOfRemovesS->pop();
+                }
+                else //last move was a faculty
+                {
+                  //add the faculty back to the masterFaculty
+                }
               }
 
 

@@ -6,9 +6,12 @@ using namespace std;
 class DBEdits{
   public:
     bool lastMoveWasAdd;
+    bool lastMoveWasS;
 
-    GenStack<Person*>* stackOfAdds;
-    GenStack<Person*>* stackOfRemoves;
+    GenStack<Student*>* stackOfAddS;
+    GenStack<Faculty*>* stackOfAddF;
+    GenStack<Faculty*>* stackOfRemovesF;
+    GenStack<Student*>* stackOfRemovesS;
 
     DBEdits();
     ~DBEdits();
@@ -16,12 +19,16 @@ class DBEdits{
 };
 
 DBEdits::DBEdits(){
-  stackOfAdds = new GenStack<Person*>();
-  stackOfRemoves = new GenStack<Person*>();
+  stackOfAddS = new GenStack<Student*>();
+  stackOfAddF = new GenStack<Faculty*>();
+  stackOfRemovesF = new GenStack<Faculty*>();
+  stackOfRemovesS = new GenStack<Student*>();
 }
 
 DBEdits::~DBEdits(){
-  delete stackOfAdds;
-  delete stackOfRemoves;
+  delete stackOfAddS;
+  delete stackOfAddF;
+  delete stackOfRemovesF;
+  delete stackOfRemovesS;
   cout << "stacks have been deleted" << endl;
 }
