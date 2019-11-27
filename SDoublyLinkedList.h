@@ -184,7 +184,7 @@ SListNode<T>* SDoublyLinkedList<T>::remove(T elem)
   curr->next = NULL;
   curr->prev = NULL;
   size--;
-  
+
   return curr;
 }
 

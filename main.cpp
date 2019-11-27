@@ -7,132 +7,9 @@
 
 using namespace std;
 
-// Assign 5 todo list:
-/*
-1. 2 BSTs that act as our two tables for students and faculty respectively (masterFaculty and masterStudent)
----MENU---
-2.  Print print print, order the stuff
-3. Add new student and add new advisor
-4. Delete student and delete advisor --> must adjust accordingly for advisee list and such
-5. Misc functons for menu
-6. Rollback --> stack
----Structure of main---
-7. Check current directory for facultyTable and studentTable
-8. If neither of them exist, Initialize two new empty trees, otherwise, read file data into tree objects
-9. Run menu loop until user exits
-10. After exiting, write/serialize trees to facultyTable and studentTable files
-*/
 
-// Other shtuff:
-// Convert BST to GenBST that finishes the implementation and makes it generic
-// Extend person class
-
-
-int main(int argc, char** argv){
-
-  // do
-  // the
-  // things
-
-  // test with int
-  /*
-  BST<int>* intTree = new BST<int>();
-  int a = 134;
-  int b = 136;
-  int c = 174;
-  int d = 188;
-  int e = 199;
-  intTree->insert(a);
-  intTree->insert(b);
-  intTree->insert(c);
-  intTree->insert(d);
-  intTree->insert(e);
-  intTree->printTree();
-  delete intTree;
-
-  BST<Person*>* theTree = new BST<Person*>();
-  Person* p1 = new Person("Name1", "Level1", 1001);
-  Person* p2 = new Person("Name2", "Level2", 1002);
-  Person* p3 = new Person("Name3", "Level3", 1003);
-  Person* p4 = new Person("Name4", "Level4", 1004);
-  Person* p5 = new Person("Name5", "Level5", 995);
-  Person* p6 = new Person("Name6", "Level6", 996);
-
-  cout << "Attempting to create a student" << endl;
-  Student* s1 = new Student("Jt", "Beast(Student)" , 2317445, "Data Analytics", 4.00, 2001);
-  cout << "Attempting to print student" << endl;
-  // s1->printStudent();
-  //Student* s1 = new Student("Data Science", 3.03, 1001);
-  //creating faculty tree
-  BST<Faculty*>* facTree = new BST<Faculty*>();
-  cout << "Attempting to create faculty" << endl;
-  Faculty* f1 = new Faculty("Rene", "Professor", 2001, "Computer Science", 2317445);
-  Faculty* f2 = new Faculty("Linstead", "Professor", 2002, "Computer Science", 2317445);
-  f2->addAdvisee(101);
-  f2->addAdvisee(102);
-  f2->addAdvisee(103);
-  facTree->insert(f1);
-  facTree->insert(f2);
-  cout << "Attempting to print out faculty" << endl;
-  // f1->printFaculty();
-  // f2->printFaculty();
-
-  theTree->insert(p1);
-  //theTree->printTree();
-  theTree->insert(p2);
-  theTree->insert(p3);
-  theTree->insert(p4);
-  theTree->insert(p5);
-  theTree->insert(p6);
-
-  cout << "Max Number getting printed" << endl;
-  cout << p1->getId() << endl;
-  cout << "Attempting to find Name3 person in tree" << endl;
-  Person* temp = theTree->find(1003);
-  cout << temp->getName() << endl;
-
-  //Creating student tree
-  BST<Student*>* stuTree = new BST<Student*>();
-  Student* s7 = new Student("Name1", "Level1", 1001, "Math", 4.00, 2001);
-  Student* s2 = new Student("Name2", "Level2", 1002, "Math2", 4.00, 2001);
-  Student* s3 = new Student("Name3", "Level3", 1003, "Math3", 4.00, 2001);
-  Student* s4 = new Student("Name4", "Level4", 1004, "Math4", 4.00, 2001);
-  Student* s5 = new Student("Name5", "Level5", 1005, "Math5", 4.00, 2001);
-  Student* s6 = new Student("Name6", "Level6", 1006, "Math6", 4.00, 2001);
-  stuTree->insert(s7);
-  stuTree->insert(s2);
-  stuTree->insert(s3);
-  stuTree->insert(s4);
-  stuTree->insert(s5);
-  stuTree->insert(s6);
-
-  cout << "Attempting to print entire tree" << endl;
-  //print person must be different for each person
-  //stuTree->recPrintStudent(stuTree->getRoot());
-  cout << "\n" << endl;
-
-
-
-  // -------------Start of the program-----------------(jk more testing still)
-
-  cout << "\n\n\ni am the captain now" << endl;
-
-  /*
-  SpecialBST<Faculty*>* masterFaculty = new SpecialBST<Faculty*>();
-  masterFaculty->insert(f2);
-  masterFaculty->insert(f1);
-
-  SpecialBST<Student*>* masterStudent = new SpecialBST<Student*>();
-  masterStudent->insert(s1);
-  masterStudent->insert(s2);
-  masterStudent->insert(s3);
-  masterStudent->insert(s4);
-  masterStudent->insert(s5);
-  masterStudent->insert(s6);
-  masterStudent->insert(s7);
-  */
-
-  // ---------------------------------------------------------------
+int main(int argc, char** argv)
+{
 
   // Check current directory for studentTable and facultyTable
   ifstream facultyTable, studentTable;
@@ -154,7 +31,6 @@ int main(int argc, char** argv){
       }
       else{
         // add student to tree
-        // cout << "inserting into tree: " << s->getId() << endl;
         masterStudent->insert(s);
       }
     }
@@ -169,7 +45,6 @@ int main(int argc, char** argv){
       }
       else{
         // add faculty to tree
-        // cout << "inserting into tree: " << f->getId() << endl;
         masterFaculty->insert(f);
       }
     }
@@ -218,19 +93,16 @@ int main(int argc, char** argv){
     string um_id;
     switch (userInput)
     {
-      case 1:
-              //print student tree in ascending order
+      case 1: //print student tree in ascending order
               masterStudent->printTree();
               break;
 
-      case 2:
-              //print faculty tree in ascending order
+      case 2: //print faculty tree in ascending order
               masterFaculty->printTree();
               break;
 
-      case 3:
+      case 3: //print information of student given ID #
               cin.ignore();
-              //print information of student given ID #
               int lookId;
 
               cout << "Enter the student ID# of the student you'd like to look up." << endl;
@@ -254,9 +126,8 @@ int main(int argc, char** argv){
               masterStudent->find(lookId)->print();
               break;
 
-      case 4:
+      case 4: //print information of faculty given ID #
               cin.ignore();
-              //print information of student given ID #
 
               cout << "Enter the faculty ID# of the faculty you'd like to look up." << endl;
               getline(cin, um_id);
@@ -349,7 +220,6 @@ int main(int argc, char** argv){
 
       case 7: // add student
       {
-
               cin.ignore(); // need to catch the last input's newline char so our input will work here
 
               // declare variables
@@ -479,7 +349,6 @@ int main(int argc, char** argv){
       }
       case 8: // delete a student given the id
       {
-
               cin.ignore(); // need to catch the last input's newline char so our input will work here
 
               string str_id;
@@ -653,7 +522,6 @@ int main(int argc, char** argv){
 
               // Grab root of masterFaculty for replacement faculty member/advisor
               Faculty* replacementFacMember = masterFaculty->getRoot()->obj;
-              cout << "root = " << replacementFacMember->getId() << endl;
               // Go through advisee list and assign each student a new advisor
               int *student_ids;
               student_ids = f->replaceAdvisor(replacementFacMember);
@@ -792,7 +660,8 @@ int main(int argc, char** argv){
               }
               break;
 
-      case 13:
+      case 13: //rollback
+      {
               // Actual rollback to implemented right here
               if (dbe->lastMoveWasAdd == true)
               {
@@ -859,17 +728,20 @@ int main(int argc, char** argv){
                   int facId_1 = f->getId();
                   //find list of advisees
                   int sizeOfList_1 = f->getList()->getSize();
-                  cout << "Anything in this list?: " << sizeOfList_1 <<endl;
-                  for(int i = 0; i < sizeOfList_1; ++i)
+                  //check if they even had student's in that list
+                  if(sizeOfList_1 != 0)
                   {
-                    cout << "Running for loop" << endl;
-                    int studId = f->getList()->removeFront();
-                    cout << "Got student ID" << endl;
-                    //locate student using find method and change their advisor back
-                    cout << "Changing advisor back" << endl;
-                    masterStudent->find(studId)->setAdvisor(facId_1);
-                    //insert student back into the list so we dont lose them
-                    f->getList()->insertBack(studId);
+                    for(int i = 0; i < sizeOfList_1; ++i)
+                    {
+                      cout << "Running for loop" << endl;
+                      int studId = f->getList()->removeFront();
+                      cout << "Got student ID" << endl;
+                      //locate student using find method and change their advisor back
+                      cout << "Changing advisor back" << endl;
+                      masterStudent->find(studId)->setAdvisor(facId_1);
+                      //insert student back into the list so we dont lose them
+                      f->getList()->insertBack(studId);
+                    }
                   }
                   cout << "successfully rolled back. (Added faculty)" << endl;
                   //add faculty back to masterFaculty
@@ -881,7 +753,9 @@ int main(int argc, char** argv){
 
               break;
 
-      case 14:
+      }
+
+      case 14: //exit and write to files
               // Write to files
 
               faculty_out.open("facultyTable");
@@ -903,7 +777,7 @@ int main(int argc, char** argv){
               return 0;
               break;
 
-      default:
+      default: //incase of invalid input
               cout << "Invalid input. Try again!" << endl;
               break;
     }

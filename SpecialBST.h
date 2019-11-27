@@ -21,6 +21,7 @@ template <class T>
 void SpecialBST<T>::serializeTree(ostream& o){
   recSerialize(this->getRoot(), o);
   o << "done" << endl; // adds marker at the end so deserializer knows when to stop input
+  //silly JT with his couts 
   cout << "tree HAS BEEN EPICLY serialized" << endl;
 }
 

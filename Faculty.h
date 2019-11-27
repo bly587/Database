@@ -113,7 +113,7 @@ void Faculty::addAdvisee(int id)
 
 void Faculty::removeAdvisee(int id)
 {
-  cout << "removing from m_advisees: " << id << endl;
+  //removes advisee 
   m_advisees->remove(id);
 }
 

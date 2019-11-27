@@ -60,7 +60,7 @@ void BST<T>::recDelete(TreeNode<T> *node){
 
 template <class T>
 void BST<T>::printTree(){
-  cout << "Printing tree where root = " << root->obj->getId() << endl;
+  //Print's tree
   recPrint(root);
 }
 
@@ -69,9 +69,10 @@ void BST<T>::recPrint(TreeNode<T>* node){
   if (node == NULL){
     return;
   }
-
+  //print left node
   recPrint(node->left);
   node->obj->print();
+  //print right node
   recPrint(node->right);
 }
 
@@ -257,13 +258,11 @@ bool BST<T>::deleteNode(T elem){
   //TreeNode<T> *nodeToFind = search(elem);
   //cout << nodeToFind << endl;
   int key = search(elem);
-  cout << "looking for key= " << key << endl;
 
   // let's attempt to find the node to be deleted
   while (current->key != key)
   {
     parent = current;
-    cout << "current: " << current << endl;
 
     if (key < current->key){
       // go left
@@ -284,7 +283,6 @@ bool BST<T>::deleteNode(T elem){
   }
 
   // if we make it here, then we have found the node to be deleted
-  cout << "found node to be deleted" << endl;
 
   // if node is external / has 0 children / is a leaf
   if (current->left == NULL && current->right == NULL){

@@ -10,8 +10,9 @@ class TreeNode{
     ~TreeNode(); // when creating a template class, destructor must be virtual
     int getKey();
     T getObject();
-
+    //key is out id
     int key;
+    //object being stored
     T obj;
     TreeNode *left;
     TreeNode *right;

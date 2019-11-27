@@ -131,7 +131,7 @@ bool operator > (Person &obj1, Person &obj2){
 
 // Overload Print
 ostream& operator << (ostream& o, Person& p){
-  cout << "doing the prints" << endl;
+  //cout << "doing the prints" << endl;
   o << p.m_name << endl;
   o << p.m_level << endl;
   o << p.m_id << endl;
