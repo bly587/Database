@@ -217,6 +217,8 @@ int main(int argc, char** argv){
     cin >> userInput;
     //switch statement for different operations
     int sizeOfList;
+    int oldAdvisor;
+    string um_id;
     switch (userInput)
     {
       case 1:
@@ -230,31 +232,105 @@ int main(int argc, char** argv){
               break;
 
       case 3:
+              cin.ignore();
               //print information of student given ID #
               int lookId;
+
               cout << "Enter the student ID# of the student you'd like to look up." << endl;
-              cin >> lookId;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              //if no errors thrown then do this
               masterStudent->find(lookId)->print();
               break;
 
       case 4:
+              cin.ignore();
+              //print information of student given ID #
+
+              cout << "Enter the faculty ID# of the faculty you'd like to look up." << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
               //print information of faculty given ID #
-              cout << "Enter the faculty ID# of the student you'd like to look up." << endl;
-              cin >> lookId;
               masterFaculty->find(lookId)->print();
               break;
 
       case 5: //print info of student's faculty advisor given student id
+              cin.ignore();
+              //print information of student given ID #
+
               cout << "Enter the student's ID#" << endl;
-              cin >> lookId;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              //get advisor ID from student object
               lookId = masterStudent->find(lookId)->getAdvisor();
               cout << "Here is the information of this student's advisor:" << endl;
               masterFaculty->find(lookId)->print();
               break;
 
-      case 6: //print all names of facutlies advisees given faculty ID #
-              cout << "Enter the faculty's ID#" << endl;
-              cin >> lookId;
+      case 6: //print all names of facutly's advisees given faculty ID #
+              cin.ignore();
+              //print information of student given ID #
+
+              cout << "Enter the faculty ID# of the faculty" << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              //make variable for the size of the faculty's linkedlist
               sizeOfList = masterFaculty->find(lookId)->getList()->getSize();
               //check if list has anyone in it
               cout << "Advisees: " << endl;
@@ -537,10 +613,117 @@ int main(int argc, char** argv){
               cout << "case 10" << endl;
               break;
       case 11: //change advisor given student's id and the new faculty id
-              cout << "case 11" << endl;
+              cin.ignore(); //you right
+              int newFacId;
+              //error check input
+              cout << "Enter the Student's ID#" << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              //error check input
+              cout << "Enter the Faculty's ID#" << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                newFacId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              //check if student has an advisor and if they are deleted from their list
+              oldAdvisor = masterStudent->find(lookId)->getAdvisor();
+
+              if(oldAdvisor != newFacId)
+              {
+                //delete student from old faculty advisor's list
+                if(masterFaculty->find(oldAdvisor)->getList()->find(lookId) == true)
+                {
+                  masterFaculty->find(oldAdvisor)->getList()->remove(lookId);
+                }
+                //change advisor in student class
+                masterStudent->find(lookId)->setAdvisor(newFacId);
+                //add student to faculty id
+                masterFaculty->find(newFacId)->getList()->insertFront(lookId);
+              }
+              else
+              {
+                cout << "Bruh he already his advisor..." << endl;
+              }
+              cout << "Set new fac id for " << lookId << " to " << masterStudent->find(lookId)->getAdvisor() << endl;
               break;
       case 12: //remove student from faculty's linked list given respective ids
-              cout << "case 12" << endl;
+              cin.ignore(); //you right
+              int facId;
+              //error check input
+              cout << "Enter the Student's ID# you'd like to have removed" << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                lookId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+              cout << "Enter the Faculty's ID#" << endl;
+              getline(cin, um_id);
+              // Try catch block refuses (not punishes lol) to allow user to input incorrect value
+              try
+              {
+                facId = stoi(um_id);
+              }
+              catch (invalid_argument e)
+              {
+                cout << "Invalid input given. Please try again." << endl;
+                break;
+              }
+              catch (out_of_range e)
+              {
+                cout << "Your input is too large. Please try again." << endl;
+                break;
+              }
+
+              //check to make sure the student's Id is in the respective faculty's linkedlist
+              if(masterFaculty->find(facId)->getList()->find(lookId) == true)
+              {
+                //deleting student from faculty's linked list
+                masterFaculty->find(facId)->getList()->remove(lookId);
+                //update student to have no advisor
+                masterStudent->find(lookId)->setAdvisor(0); //0 refers to no faculty ID
+              }
+              else
+              {
+                cout << "Um maybe wrong faculty Id? Cuz that's not his advisor..." << endl;
+                break;
+              }
               break;
 
       case 13:

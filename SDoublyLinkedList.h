@@ -21,7 +21,8 @@ class SDoublyLinkedList
     T removeFront();
     SListNode<T>* remove(T elem);
     SListNode<T>* deletePos(int pos);
-    SListNode<T>* find(T elem);
+
+    bool find(T elem);
 
     bool isEmpty();
     void printList();
@@ -67,6 +68,23 @@ template <class T>
 int SDoublyLinkedList<T>::getSize()
 {
   return size;
+}
+
+template <class T>
+bool SDoublyLinkedList<T>::find(T elem){
+  bool idx = false;
+  SListNode<T>* curr = front;
+  while (curr != NULL)
+  {
+    if(curr->data == elem)
+    {
+      //cout << "Found him!" << endl;
+      return true;
+    }
+    curr = curr->next;
+  }
+  //cout << "Returning false" << endl;
+  return false;
 }
 
 template <class T>
